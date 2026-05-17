@@ -145,6 +145,7 @@ sum(duplicated(data))
 ```
 
 L'exécution de la fonction duplicated() sur l'ensemble du jeu de données retourne 0 doublon. Chaque ligne correspond à un individu distinct. Le jeu de données ne nécessite donc aucune suppression d'observations pour cause de redondance.
+
 ## Valeurs manquantes
 
 ```{r missing-values}
@@ -257,9 +258,10 @@ for (var in target_vars) {
 ```
 
 Le test de Shapiro-Wilk a été appliqué sur les 4 variables de performance physique. Les résultats montrent deux profils distincts :
-hand_grip_strength_kg et sit_ups_count — La p-value est extrêmement faible (respectivement 7.62×10⁻⁸ et 7.36×10⁻⁹), bien inférieure au seuil de 0.05. L'hypothèse de normalité est donc rejetée pour ces deux variables. La force de préhension est influencée par la dualité hommes/femmes, tandis que l'endurance abdominale présente une distribution concentrée avec des valeurs extrêmes importantes (47 outliers détectés).
-sit_and_reach_cm et vo2_estimate_ml_per_kg_min — Les p-values sont très élevées (0.441 et 0.948), largement supérieures à 0.05. L'hypothèse de normalité ne peut pas être rejetée pour ces deux variables, ce qui est confirmé visuellement par la distribution quasi-gaussienne du VO₂ max.
-Conclusion générale : La normalité est vérifiée pour la flexibilité et la capacité aérobie, mais rejetée pour la force musculaire et l'endurance abdominale. Ce résultat ne remet pas en cause l'utilisation de l'ACP, qui est une méthode robuste ne supposant pas la normalité stricte des données. Cependant, la non-normalité de certaines variables devra être prise en compte lors de l'interprétation des axes factoriels et des profils de clusters.
+hand_grip_strength_kg et sit_ups_count* — les p-values sont extrêmement faibles (respectivement 7.62×10⁻⁸ et 3.69×10⁻¹¹), bien inférieures au seuil de 0.05. L'hypothèse de normalité est rejetée pour ces deux variables.*
+sit_and_reach_cm* — la p-value (0.049) est marginalement inférieure à 0.05. La normalité est donc rejetée, bien que la statistique W = 0.998 soit très proche de 1, indiquant une distribution quasi-normale.*
+vo2_estimate_ml_per_kg_min* — la p-value (0.094) est supérieure à 0.05. L'hypothèse de normalité ne peut pas être rejetée pour cette variable, ce qui est cohérent avec sa distribution quasi-gaussienne observée graphiquement.*
+Conclusion générale : Seul le VO₂ max satisfait strictement l'hypothèse de normalité. Les trois autres variables présentent des distributions significativement non normales. Ce résultat ne remet pas en cause l'utilisation de l'ACP, qui est une méthode robuste ne supposant pas la normalité stricte des données.
 ```{r}
 ggplot(health_clean, aes(x = sex, y = hand_grip_strength_kg, fill = sex)) +
   geom_boxplot() +
@@ -304,7 +306,6 @@ data_acp <- health_clean %>%
 
 data_scaled <- scale(data_acp)
 ```
-masculines en raison de leur surreprésentation.
 ```{r}
 cor_matrix <- cor(data_scaled)
 corrplot(cor_matrix, method = "color", type = "upper",
@@ -345,7 +346,7 @@ Après sélection des variables les plus pertinentes, l’indice KMO global obte
 
 Les valeurs MSA individuelles montrent que toutes les variables retenues contribuent correctement à la structure factorielle.
 
-"Les variables sit_ups_count (MSA = 0.79) et sit_and_reach_cm (MSA = 0.76) présentent les meilleures adéquations factorielles individuelles, indiquant qu'elles partagent davantage de variance commune avec les autres variables. La variable percent_body_fat affiche le MSA le plus faible (0.61), bien qu'encore acceptable pour une ACP exploratoire."
+Les variables sit_ups_count (MSA = 0.79) et sit_and_reach_cm (MSA = 0.76) présentent les meilleures adéquations factorielles individuelles, indiquant qu'elles partagent davantage de variance commune avec les autres variables. La variable percent_body_fat affiche le MSA le plus faible (0.61), bien qu'encore acceptable pour une ACP exploratoire."
 
 ## Test de Bartlett
 
@@ -577,11 +578,8 @@ Cluster 1 : médiane ≈ 4 cm, distribution compacte et centrée sur des valeurs
 Cluster 2 : médiane ≈ 10 cm, avec une dispersion plus large (IQR ≈ 13 cm). Ce groupe affiche une flexibilité intermédiaire à bonne.
 Cluster 3 : médiane ≈ 11 cm, distribution étendue avec quelques outliers au-dessus de 25 cm. Ce groupe présente la meilleure flexibilité en médiane.
 
-Ces différences confirment que la flexibilité contribue à distinguer les clusters, bien qu'elle soit principalement portée par Dim2 dans l'ACP. Le chevauchement entre clusters 2 et 3 sur cette variable suggère que la flexibilité seule ne suffit pas à les discriminer — c'est la combinaison avec les variables de Dim1 qui permet la séparation."
+Ces différences confirment que la flexibilité contribue à distinguer les clusters, bien qu'elle soit principalement portée par Dim2 dans l'ACP. Le chevauchement entre clusters 2 et 3 sur cette variable suggère que la flexibilité seule ne suffit pas à les discriminer — c'est la combinaison avec les variables de Dim1 qui permet la séparation.
 
-Les boxplots montrent des différences visibles entre les clusters, notamment concernant le BMI et le VO₂ max.
-
-Ces résultats confirment la pertinence de la segmentation obtenue.
 ```{r}
 ggplot(health_clean,
        aes(x = cluster,
@@ -628,15 +626,15 @@ Cluster 3 (bleu) : médiane ≈ 40 kg, distribution plus large (IQR ≈ 18 kg) a
 
 La séparation nette du cluster 2 par rapport aux clusters 1 et 3 sur cette variable explique pourquoi hand_grip_strength_kg est la variable la plus contributive à Dim1 de l'ACP : elle discrimine efficacement les profils féminins des profils masculins.
 
-##. Répartition hommes/femmes par cluster
+## Répartition hommes/femmes par cluster
 ```{r }
 table(health_clean$cluster, health_clean$sex)
 prop.table(table(health_clean$cluster, health_clean$sex), margin = 1)
 ```
 La répartition par sexe révèle une segmentation quasi-totalement déterminée par le sexe :
 
-Cluster 1 : 98.6% d'hommes (688M / 10F) → groupe masculin musclé
-Cluster 2 : 98.0% de femmes (595F / 12M) → groupe féminin
+Cluster 1 : 98.6% d'hommes (688M / 11F) → groupe masculin musclé
+Cluster 2 : 98.0% de femmes (594F / 12M) → groupe féminin
 Cluster 3 : 94.2% d'hommes (655M / 40F) → groupe masculin flexible
 
 Ce résultat est fondamental : il signifie que le K-Means a essentiellement capturé les différences physiologiques entre sexes plutôt que des profils de condition physique transversaux. La variable sex n'étant pas incluse dans l'ACP, cette segmentation émerge naturellement des données, confirmant que le sexe est le principal facteur structurant des profils physiologiques dans cet échantillon.
@@ -646,8 +644,9 @@ Ce résultat est fondamental : il signifie que le K-Means a essentiellement capt
 La segmentation obtenue reflète principalement les différences physiologiques naturelles liées au sexe, la variable sex n'ayant pas été incluse comme variable active dans l'ACP. Ce résultat, bien que biologiquement attendu, confirme la robustesse de l'algorithme K-Means qui a su détecter cette structure sous-jacente sans information explicite sur le genre. Une analyse complémentaire séparée par sexe pourrait permettre d'identifier des sous-profils plus fins au sein de chaque groupe
 Sur la base des statistiques descriptives par cluster, trois profils physiologiques distincts ont été identifiés :
 
-Cluster 1 — "Force Musculaire" : groupe majoritairement masculin (98.6%), caractérisé par la force de préhension la plus élevée (41.8 kg) mais la flexibilité la plus faible (2.98 cm).
-Cluster 2 — "Profil Féminin" : groupe quasi-exclusivement féminin (98%), présentant la masse grasse la plus élevée (56.9%), la force la plus faible (25.1 kg) et le VO₂ max le plus bas (31.3 ml/kg/min).
+Cluster 1 — "Force Musculaire" : groupe majoritairement masculin (98.6%), caractérisé par la force de préhension la plus élevée (41.6 kg) mais la flexibilité la plus faible (2.93 cm).
+Cluster 2 — "Profil Féminin" : groupe quasi-exclusivement féminin (98%), présentant la masse grasse la plus élevée (57.0%%) Cette valeur élevée s'explique par le fait que la winsorisation a plafonné les valeurs de percent_body_fat à Q3 + 1.5×IQR ≈ 60%, valeur qui correspond précisément au maximum observé pour les femmes dans ce dataset. La médiane du cluster 2 à 60% reflète donc une concentration naturelle des valeurs féminines autour de ce plafond biologique et non une anomalie du traitement."
+, la force la plus faible (25.1 kg) et le VO₂ max le plus bas (31.3 ml/kg/min).
 Cluster 3 — "Polyvalence Physique" : groupe majoritairement masculin (94.2%), affichant le meilleur VO₂ max (39.6 ml/kg/min) et la meilleure flexibilité (11.7 cm)."
 
 # Analyse Combinée — ACP et Clustering
@@ -744,3 +743,4 @@ La segmentation obtenue est fortement influencée par le sexe, variable non incl
 "Cette étude a démontré la puissance des méthodes statistiques multivariées pour explorer et structurer des données physiologiques complexes. L'ACP a permis de synthétiser l'information en deux dimensions physiologiquement interprétables, tandis que le K-Means a objectivement segmenté la population en trois profils cohérents et distincts.
 La découverte que le sexe constitue le principal facteur structurant des profils physiologiques — sans avoir été explicitement inclus dans l'analyse — témoigne de la robustesse et de la sensibilité des méthodes multivariées pour détecter des structures sous-jacentes dans les données.*
 Ces résultats ouvrent la voie à des applications concrètes en santé publique, médecine du sport et programme de prévention, en offrant une base scientifique solide pour une prise en charge individualisée et adaptée à chaque profil physiologique."
+À terme, l'intégration de variables comportementales (niveau d'activité déclaré, alimentation) et longitudinales (évolution dans le temps) permettrait d'enrichir cette analyse et de valider la stabilité des profils identifiés.
