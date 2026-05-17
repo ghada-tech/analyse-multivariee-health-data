@@ -1,0 +1,7 @@
+"0","fviz_cluster("
+"0","  res.km,"
+"0","  data = data_pca,"
+"0","  geom = ""point"","
+"0","  ellipse.type = ""norm"","
+"0","  ggtheme = theme_minimal()"
+"0",")"

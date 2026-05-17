@@ -1,0 +1,1727 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Analyse Statistique des Données Physiologiques et Anthropométriques},
+  pdfauthor={Ghada},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Analyse Statistique des Données Physiologiques et
+Anthropométriques}
+\author{Ghada}
+\date{2026-05-14}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Introduction}\label{introduction}
+
+\subsection{Contexte du projet}\label{contexte-du-projet}
+
+Dans le domaine des sciences du sport, de la santé publique et de la
+biométrie, l'analyse statistique des données physiologiques et
+anthropométriques joue un rôle fondamental dans la compréhension des
+déterminants de la condition physique humaine. Les indicateurs tels que
+l'âge, l'indice de masse corporelle (IMC), le pourcentage de masse
+grasse, la force musculaire, l'endurance et la capacité cardiovasculaire
+sont largement utilisés pour évaluer l'état de santé et le niveau de
+forme physique des individus.
+
+Cependant, ces variables présentent souvent des distributions complexes,
+influencées par des facteurs biologiques, sociaux et comportementaux,
+notamment le sexe. L'étude statistique rigoureuse de ces données
+nécessite donc l'utilisation conjointe de méthodes descriptives, de
+tests de normalité et de tests paramétriques et non paramétriques
+permettant d'identifier les relations significatives entre les
+variables.
+
+Dans ce contexte, le présent projet s'inscrit dans une démarche
+d'analyse statistique approfondie d'un jeu de données réel contenant des
+informations démographiques, anthropométriques et des mesures de
+performance physique. Ce travail vise à appliquer différentes techniques
+statistiques afin de valider des hypothèses, d'évaluer la structure des
+données et de comparer les groupes selon des variables pertinentes.
+
+Ce projet constitue également une application pratique des concepts
+théoriques abordés dans le cadre du cours de statistique, en mettant
+l'accent sur la rigueur méthodologique, l'interprétation correcte des
+résultats et la justification du choix des tests statistiques utilisés.
+
+\subsection{Objectifs du projet}\label{objectifs-du-projet}
+
+L'objectif principal de ce projet est de réaliser une analyse
+statistique complète et structurée d'un ensemble de données
+physiologiques et anthropométriques, en vue de mieux comprendre les
+relations entre les caractéristiques individuelles et les performances
+physiques.
+
+Plus précisément, ce projet vise à :
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Explorer et décrire} les données à l'aide de statistiques
+  descriptives afin d'identifier les tendances centrales, la dispersion
+  et la structure globale des variables étudiées.
+\item
+  \textbf{Vérifier les hypothèses de normalité} des variables
+  quantitatives à l'aide de tests statistiques appropriés, notamment le
+  test de Shapiro--Wilk, afin de justifier le choix des méthodes
+  paramétriques ou non paramétriques.
+\item
+  \textbf{Détecter et analyser} les valeurs aberrantes susceptibles
+  d'influencer les résultats statistiques.
+\item
+  \textbf{Comparer les groupes} définis par la variable sexe à l'aide de
+  tests paramétriques (tests t, ANOVA, tests de proportion) et non
+  paramétriques (tests de Wilcoxon, tests des signes), selon la nature
+  et la distribution des données.
+\item
+  \textbf{Étudier les relations} entre les variables à travers l'analyse
+  des corrélations et l'évaluation de leur significativité statistique.
+\end{itemize}
+
+À travers ces objectifs, ce projet cherche à démontrer la capacité des
+outils statistiques à fournir des résultats fiables et interprétables,
+tout en mettant en évidence l'importance du choix méthodologique dans
+l'analyse des données réelles.
+
+\subsection{Description des données}\label{description-des-donnuxe9es}
+
+Les données utilisées dans ce projet proviennent d'un ensemble de
+mesures physiologiques, anthropométriques et de performance physique
+collectées auprès d'un échantillon d'individus. Chaque observation
+correspond à un individu et regroupe des informations démographiques,
+des caractéristiques corporelles ainsi que des indicateurs de condition
+physique.
+
+Les variables étudiées ont été sélectionnées afin de couvrir différents
+aspects de la condition physique, notamment la composition corporelle,
+la force musculaire, l'endurance musculaire, la flexibilité et la
+capacité cardiorespiratoire. La présence de variables qualitatives et
+quantitatives permet de mener des analyses statistiques variées,
+incluant des comparaisons de groupes et des tests d'hypothèses.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3448}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2069}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4483}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Variable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{sex} & Qualitative & Sexe de l'individu (M/F) \\
+\texttt{age} & Quantitative & Âge de l'individu (années) \\
+\texttt{bmi} & Quantitative & Indice de masse corporelle \\
+\texttt{percent\_body\_fat} & Quantitative & Pourcentage de masse
+grasse \\
+\texttt{hand\_grip\_strength\_kg} & Quantitative & Force de préhension
+(kg) \\
+\texttt{sit\_ups\_count} & Quantitative & Nombre de sit-ups \\
+\texttt{sit\_and\_reach\_cm} & Quantitative & Flexibilité (cm) \\
+\texttt{vo2\_estimate\_ml\_per\_kg\_min} & Quantitative & VO₂ max estimé
+(ml/kg/min) \\
+\end{longtable}
+}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Importation et Préparation des
+Données}\label{importation-et-pruxe9paration-des-donnuxe9es}
+
+Cette section présente les étapes préliminaires nécessaires à l'analyse
+statistique des données : chargement des bibliothèques, importation du
+jeu de données, exploration initiale et étude de la distribution des
+variables quantitatives. Ces étapes sont essentielles pour assurer la
+qualité des analyses ultérieures et orienter le choix des méthodes
+appropriées.
+
+\subsection{Chargement des packages}\label{chargement-des-packages}
+
+L'analyse des données a été réalisée à l'aide du logiciel R, en
+utilisant plusieurs bibliothèques spécialisées :
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{openxlsx} et \texttt{readxl} : importation de fichiers Excel
+\item
+  \texttt{dplyr} et \texttt{tidyr} : manipulation et transformation des
+  données
+\item
+  \texttt{ggplot2} et \texttt{gridExtra} : visualisation graphique
+\item
+  \texttt{psych} : statistiques descriptives
+\item
+  \texttt{corrplot} : visualisation des corrélations
+\item
+  \texttt{MASS} : méthodes statistiques avancées (régression pas à pas)
+\item
+  \texttt{naniar} : détection et visualisation des valeurs manquantes
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(corrplot)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Importation et exploration
+initiale}\label{importation-et-exploration-initiale}
+
+Le jeu de données est importé à partir d'un fichier Excel à l'aide de la
+fonction \texttt{read\_excel()}. Les fonctions \texttt{head()},
+\texttt{summary()} et \texttt{str()} permettent d'obtenir un aperçu des
+premières lignes, des statistiques descriptives générales et des
+informations sur le type de chaque variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA.xlsx"}\NormalTok{)}
+
+\FunctionTok{head}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 10
+##   participant_id sex     age measurement_date   bmi percent_body_fat
+##            <dbl> <chr> <dbl> <chr>            <dbl>            <dbl>
+## 1              1 M        46 2019-01-19        26.5             45  
+## 2              2 M        25 2018-03-16        28.8             45  
+## 3              3 M        53 2017-06-02        25.7             45  
+## 4              4 M        46 2018-02-11        28               45  
+## 5              5 F        32 2018-01-25        25               57.7
+## 6              6 F        28 2018-11-06        24.7             60  
+## # i 4 more variables: hand_grip_strength_kg <dbl>, sit_and_reach_cm <dbl>,
+## #   sit_ups_count <dbl>, vo2_estimate_ml_per_kg_min <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2000   10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## tibble [2,000 x 10] (S3: tbl_df/tbl/data.frame)
+##  $ participant_id            : num [1:2000] 1 2 3 4 5 6 7 8 9 10 ...
+##  $ sex                       : chr [1:2000] "M" "M" "M" "M" ...
+##  $ age                       : num [1:2000] 46 25 53 46 32 28 34 34 49 60 ...
+##  $ measurement_date          : chr [1:2000] "2019-01-19" "2018-03-16" "2017-06-02" "2018-02-11" ...
+##  $ bmi                       : num [1:2000] 26.5 28.8 25.7 28 25 24.7 24.7 27.8 25 24.6 ...
+##  $ percent_body_fat          : num [1:2000] 45 45 45 45 57.7 60 60 45 45 45 ...
+##  $ hand_grip_strength_kg     : num [1:2000] 47 28 37.7 48.9 20 21.2 28.9 38.2 41.9 34.1 ...
+##  $ sit_and_reach_cm          : num [1:2000] 13.4 -1.2 4.5 9 14.8 13.1 3.9 17.1 9.9 14.6 ...
+##  $ sit_ups_count             : num [1:2000] 13 19 18 20 23 27 17 12 12 15 ...
+##  $ vo2_estimate_ml_per_kg_min: num [1:2000] 29.8 46.5 37.2 52.5 24.6 30.1 30 45.7 39.5 28.8 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colnames}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "participant_id"             "sex"                       
+##  [3] "age"                        "measurement_date"          
+##  [5] "bmi"                        "percent_body_fat"          
+##  [7] "hand_grip_strength_kg"      "sit_and_reach_cm"          
+##  [9] "sit_ups_count"              "vo2_estimate_ml_per_kg_min"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sapply}\NormalTok{(data, class)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             participant_id                        sex 
+##                  "numeric"                "character" 
+##                        age           measurement_date 
+##                  "numeric"                "character" 
+##                        bmi           percent_body_fat 
+##                  "numeric"                  "numeric" 
+##      hand_grip_strength_kg           sit_and_reach_cm 
+##                  "numeric"                  "numeric" 
+##              sit_ups_count vo2_estimate_ml_per_kg_min 
+##                  "numeric"                  "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+
+\NormalTok{data}\SpecialCharTok{$}\NormalTok{sex }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{sex)}
+\NormalTok{data}\SpecialCharTok{$}\NormalTok{measurement\_date }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{measurement\_date)}
+
+\ControlFlowTok{if}\NormalTok{ (}\StringTok{"participant\_id"} \SpecialCharTok{\%in\%} \FunctionTok{colnames}\NormalTok{(data)) \{}
+\NormalTok{  data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{participant\_id)}
+\NormalTok{\}}
+
+\FunctionTok{head}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 9
+##   sex     age measurement_date   bmi percent_body_fat hand_grip_strength_kg
+##   <fct> <dbl> <date>           <dbl>            <dbl>                 <dbl>
+## 1 M        46 2019-01-19        26.5             45                    47  
+## 2 M        25 2018-03-16        28.8             45                    28  
+## 3 M        53 2017-06-02        25.7             45                    37.7
+## 4 M        46 2018-02-11        28               45                    48.9
+## 5 F        32 2018-01-25        25               57.7                  20  
+## 6 F        28 2018-11-06        24.7             60                    21.2
+## # i 3 more variables: sit_and_reach_cm <dbl>, sit_ups_count <dbl>,
+## #   vo2_estimate_ml_per_kg_min <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num\_vars }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"age"}\NormalTok{,}
+  \StringTok{"bmi"}\NormalTok{,}
+  \StringTok{"percent\_body\_fat"}\NormalTok{,}
+  \StringTok{"hand\_grip\_strength\_kg"}\NormalTok{,}
+  \StringTok{"sit\_and\_reach\_cm"}\NormalTok{,}
+  \StringTok{"sit\_ups\_count"}\NormalTok{,}
+  \StringTok{"vo2\_estimate\_ml\_per\_kg\_min"}
+\NormalTok{)}
+
+\NormalTok{data\_numeric }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(num\_vars))}
+
+\FunctionTok{summary}\NormalTok{(data\_numeric)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       age             bmi        percent_body_fat hand_grip_strength_kg
+##  Min.   :19.00   Min.   :15.00   Min.   :26.50    Min.   : 7.40        
+##  1st Qu.:30.00   1st Qu.:21.80   1st Qu.:45.00    1st Qu.:27.88        
+##  Median :41.00   Median :24.00   Median :45.00    Median :36.40        
+##  Mean   :41.54   Mean   :23.98   Mean   :47.80    Mean   :35.96        
+##  3rd Qu.:53.00   3rd Qu.:26.10   3rd Qu.:53.33    3rd Qu.:43.70        
+##  Max.   :64.00   Max.   :37.10   Max.   :60.00    Max.   :68.00        
+##  sit_and_reach_cm  sit_ups_count   vo2_estimate_ml_per_kg_min
+##  Min.   :-14.900   Min.   : 5.00   Min.   :10.00             
+##  1st Qu.:  3.700   1st Qu.:15.00   1st Qu.:31.50             
+##  Median :  7.900   Median :17.00   Median :36.40             
+##  Mean   :  7.887   Mean   :17.62   Mean   :36.28             
+##  3rd Qu.: 11.900   3rd Qu.:20.00   3rd Qu.:41.20             
+##  Max.   : 34.400   Max.   :33.00   Max.   :60.10
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Analyse Univariée}\label{analyse-univariuxe9e}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  sex           age        measurement_date          bmi        percent_body_fat
+##  F: 645   Min.   :19.00   Min.   :2015-01-01   Min.   :15.00   Min.   :26.50   
+##  M:1355   1st Qu.:30.00   1st Qu.:2016-04-07   1st Qu.:21.80   1st Qu.:45.00   
+##           Median :41.00   Median :2017-06-29   Median :24.00   Median :45.00   
+##           Mean   :41.54   Mean   :2017-07-01   Mean   :23.98   Mean   :47.80   
+##           3rd Qu.:53.00   3rd Qu.:2018-09-18   3rd Qu.:26.10   3rd Qu.:53.33   
+##           Max.   :64.00   Max.   :2019-12-31   Max.   :37.10   Max.   :60.00   
+##  hand_grip_strength_kg sit_and_reach_cm  sit_ups_count  
+##  Min.   : 7.40         Min.   :-14.900   Min.   : 5.00  
+##  1st Qu.:27.88         1st Qu.:  3.700   1st Qu.:15.00  
+##  Median :36.40         Median :  7.900   Median :17.00  
+##  Mean   :35.96         Mean   :  7.887   Mean   :17.62  
+##  3rd Qu.:43.70         3rd Qu.: 11.900   3rd Qu.:20.00  
+##  Max.   :68.00         Max.   : 34.400   Max.   :33.00  
+##  vo2_estimate_ml_per_kg_min
+##  Min.   :10.00             
+##  1st Qu.:31.50             
+##  Median :36.40             
+##  Mean   :36.28             
+##  3rd Qu.:41.20             
+##  Max.   :60.10
+\end{verbatim}
+
+\subsection{Préparation des
+données}\label{pruxe9paration-des-donnuxe9es}
+
+\subsubsection{Vérification des
+doublons}\label{vuxe9rification-des-doublons}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{duplicated}\NormalTok{(data))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\subsubsection{Vérification des valeurs
+manquantes}\label{vuxe9rification-des-valeurs-manquantes}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colSums}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(data))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                        sex                        age 
+##                          0                          0 
+##           measurement_date                        bmi 
+##                          0                          0 
+##           percent_body_fat      hand_grip_strength_kg 
+##                          0                          0 
+##           sit_and_reach_cm              sit_ups_count 
+##                          0                          0 
+## vo2_estimate_ml_per_kg_min 
+##                          0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(naniar)}
+\FunctionTok{vis\_miss}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/valeurs-manquantes-1} \end{center}
+
+\subsubsection{Détection et correction des valeurs
+aberrantes}\label{duxe9tection-et-correction-des-valeurs-aberrantes}
+
+La détection des valeurs aberrantes constitue une étape importante de
+l'analyse exploratoire des données, car la présence d'observations
+extrêmes peut influencer les statistiques descriptives, les tests
+d'hypothèses et les modèles statistiques ultérieurs.
+
+Dans cette étude, les valeurs aberrantes sont identifiées à l'aide d'une
+approche graphique basée sur les boxplots. Les observations situées en
+dehors des bornes définies par l'intervalle
+\([Q_1 - 1.5 \times IQR,\ Q_3 + 1.5 \times IQR]\) sont considérées comme
+aberrantes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} Fonction de détection {-}{-}{-}}
+\NormalTok{detecter\_outliers }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(variable, nom\_variable) \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{====================================}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Analyse de :"}\NormalTok{, nom\_variable, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"====================================}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\NormalTok{  Q1 }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(variable, }\FloatTok{0.25}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  Q3 }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(variable, }\FloatTok{0.75}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  IQR\_value }\OtherTok{\textless{}{-}}\NormalTok{ Q3 }\SpecialCharTok{{-}}\NormalTok{ Q1}
+\NormalTok{  limite\_basse }\OtherTok{\textless{}{-}}\NormalTok{ Q1 }\SpecialCharTok{{-}} \FloatTok{1.5} \SpecialCharTok{*}\NormalTok{ IQR\_value}
+\NormalTok{  limite\_haute }\OtherTok{\textless{}{-}}\NormalTok{ Q3 }\SpecialCharTok{+} \FloatTok{1.5} \SpecialCharTok{*}\NormalTok{ IQR\_value}
+
+\NormalTok{  outliers\_bas  }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(variable }\SpecialCharTok{\textless{}}\NormalTok{ limite\_basse, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  outliers\_haut }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(variable }\SpecialCharTok{\textgreater{}}\NormalTok{ limite\_haute, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  total\_outliers }\OtherTok{\textless{}{-}}\NormalTok{ outliers\_bas }\SpecialCharTok{+}\NormalTok{ outliers\_haut}
+
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Outliers bas  :"}\NormalTok{, outliers\_bas,  }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Outliers haut :"}\NormalTok{, outliers\_haut, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Total         :"}\NormalTok{, total\_outliers, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Limite basse  :"}\NormalTok{, }\FunctionTok{round}\NormalTok{(limite\_basse, }\DecValTok{2}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Limite haute  :"}\NormalTok{, }\FunctionTok{round}\NormalTok{(limite\_haute, }\DecValTok{2}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{limite\_basse =}\NormalTok{ limite\_basse, }\AttributeTok{limite\_haute =}\NormalTok{ limite\_haute))}
+\NormalTok{\}}
+
+\CommentTok{\# {-}{-}{-} Fonction de correction (Winsorisation) {-}{-}{-}}
+\NormalTok{corriger\_outliers }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(variable) \{}
+\NormalTok{  Q1 }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(variable, }\FloatTok{0.25}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  Q3 }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(variable, }\FloatTok{0.75}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  IQR\_value }\OtherTok{\textless{}{-}}\NormalTok{ Q3 }\SpecialCharTok{{-}}\NormalTok{ Q1}
+\NormalTok{  limite\_basse }\OtherTok{\textless{}{-}}\NormalTok{ Q1 }\SpecialCharTok{{-}} \FloatTok{1.5} \SpecialCharTok{*}\NormalTok{ IQR\_value}
+\NormalTok{  limite\_haute }\OtherTok{\textless{}{-}}\NormalTok{ Q3 }\SpecialCharTok{+} \FloatTok{1.5} \SpecialCharTok{*}\NormalTok{ IQR\_value}
+
+\NormalTok{  variable\_corrigee }\OtherTok{\textless{}{-}}\NormalTok{ variable}
+\NormalTok{  variable\_corrigee[variable }\SpecialCharTok{\textless{}}\NormalTok{ limite\_basse] }\OtherTok{\textless{}{-}}\NormalTok{ limite\_basse}
+\NormalTok{  variable\_corrigee[variable }\SpecialCharTok{\textgreater{}}\NormalTok{ limite\_haute] }\OtherTok{\textless{}{-}}\NormalTok{ limite\_haute}
+
+  \FunctionTok{return}\NormalTok{(variable\_corrigee)}
+\NormalTok{\}}
+
+\CommentTok{\# {-}{-}{-} Analyse des valeurs aberrantes {-}{-}{-}}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{ANALYSE DES VALEURS ABERRANTES}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## ANALYSE DES VALEURS ABERRANTES
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"====================================}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## ====================================
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{variables\_numeriques }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"age"}\NormalTok{, }\StringTok{"bmi"}\NormalTok{, }\StringTok{"percent\_body\_fat"}\NormalTok{,}
+  \StringTok{"hand\_grip\_strength\_kg"}\NormalTok{, }\StringTok{"sit\_and\_reach\_cm"}\NormalTok{,}
+  \StringTok{"sit\_ups\_count"}\NormalTok{, }\StringTok{"vo2\_estimate\_ml\_per\_kg\_min"}
+\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{ (var }\ControlFlowTok{in}\NormalTok{ variables\_numeriques) \{}
+  \ControlFlowTok{if}\NormalTok{ (var }\SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(data)) \{}
+    \FunctionTok{detecter\_outliers}\NormalTok{(data[[var]], var)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## ====================================
+## Analyse de : age 
+## ====================================
+## Outliers bas  : 0 
+## Outliers haut : 0 
+## Total         : 0 
+## Limite basse  : -4.5 
+## Limite haute  : 87.5 
+## 
+## ====================================
+## Analyse de : bmi 
+## ====================================
+## Outliers bas  : 8 
+## Outliers haut : 5 
+## Total         : 13 
+## Limite basse  : 15.35 
+## Limite haute  : 32.55 
+## 
+## ====================================
+## Analyse de : percent_body_fat 
+## ====================================
+## Outliers bas  : 14 
+## Outliers haut : 0 
+## Total         : 14 
+## Limite basse  : 32.51 
+## Limite haute  : 65.81 
+## 
+## ====================================
+## Analyse de : hand_grip_strength_kg 
+## ====================================
+## Outliers bas  : 0 
+## Outliers haut : 1 
+## Total         : 1 
+## Limite basse  : 4.14 
+## Limite haute  : 67.44 
+## 
+## ====================================
+## Analyse de : sit_and_reach_cm 
+## ====================================
+## Outliers bas  : 10 
+## Outliers haut : 7 
+## Total         : 17 
+## Limite basse  : -8.6 
+## Limite haute  : 24.2 
+## 
+## ====================================
+## Analyse de : sit_ups_count 
+## ====================================
+## Outliers bas  : 15 
+## Outliers haut : 32 
+## Total         : 47 
+## Limite basse  : 7.5 
+## Limite haute  : 27.5 
+## 
+## ====================================
+## Analyse de : vo2_estimate_ml_per_kg_min 
+## ====================================
+## Outliers bas  : 5 
+## Outliers haut : 7 
+## Total         : 12 
+## Limite basse  : 16.95 
+## Limite haute  : 55.75
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} Correction des outliers {-}{-}{-}}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{CORRECTION DES VALEURS ABERRANTES}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## CORRECTION DES VALEURS ABERRANTES
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"====================================}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## ====================================
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{health\_clean }\OtherTok{\textless{}{-}}\NormalTok{ data}
+\NormalTok{variables\_a\_corriger }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"bmi"}\NormalTok{, }\StringTok{"percent\_body\_fat"}\NormalTok{, }\StringTok{"hand\_grip\_strength\_kg"}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{ (var }\ControlFlowTok{in}\NormalTok{ variables\_a\_corriger) \{}
+  \ControlFlowTok{if}\NormalTok{ (var }\SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(data)) \{}
+\NormalTok{    avant }\OtherTok{\textless{}{-}}\NormalTok{ data[[var]]}
+\NormalTok{    apres }\OtherTok{\textless{}{-}} \FunctionTok{corriger\_outliers}\NormalTok{(avant)}
+\NormalTok{    health\_clean[[var]] }\OtherTok{\textless{}{-}}\NormalTok{ apres}
+\NormalTok{    modifications }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(avant }\SpecialCharTok{!=}\NormalTok{ apres, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+    \FunctionTok{cat}\NormalTok{(var, }\StringTok{":"}\NormalTok{, modifications, }\StringTok{"valeurs corrigées}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## bmi : 13 valeurs corrigées
+## percent_body_fat : 14 valeurs corrigées
+## hand_grip_strength_kg : 1 valeurs corrigées
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} Comparaison avant / après {-}{-}{-}}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{COMPARAISON AVANT / APRÈS}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## COMPARAISON AVANT / APRÈS
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"====================================}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## ====================================
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comparer\_stats }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(avant, apres, nom) \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Variable :"}\NormalTok{, nom, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"AVANT {-}\textgreater{} Min :"}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{min}\NormalTok{(avant, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\DecValTok{2}\NormalTok{),}
+      \StringTok{"| Max :"}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{max}\NormalTok{(avant, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\DecValTok{2}\NormalTok{),}
+      \StringTok{"| Moyenne :"}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{mean}\NormalTok{(avant, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\DecValTok{2}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"APRÈS {-}\textgreater{} Min :"}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{min}\NormalTok{(apres, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\DecValTok{2}\NormalTok{),}
+      \StringTok{"| Max :"}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{max}\NormalTok{(apres, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\DecValTok{2}\NormalTok{),}
+      \StringTok{"| Moyenne :"}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{mean}\NormalTok{(apres, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\DecValTok{2}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\}}
+
+\ControlFlowTok{for}\NormalTok{ (var }\ControlFlowTok{in}\NormalTok{ variables\_a\_corriger) \{}
+  \ControlFlowTok{if}\NormalTok{ (var }\SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(data)) \{}
+    \FunctionTok{comparer\_stats}\NormalTok{(data[[var]], health\_clean[[var]], var)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Variable : bmi 
+## AVANT -> Min : 15 | Max : 37.1 | Moyenne : 23.98 
+## APRÈS -> Min : 15.35 | Max : 32.55 | Moyenne : 23.98 
+## 
+## Variable : percent_body_fat 
+## AVANT -> Min : 26.5 | Max : 60 | Moyenne : 47.8 
+## APRÈS -> Min : 32.51 | Max : 60 | Moyenne : 47.81 
+## 
+## Variable : hand_grip_strength_kg 
+## AVANT -> Min : 7.4 | Max : 68 | Moyenne : 35.96 
+## APRÈS -> Min : 7.4 | Max : 67.44 | Moyenne : 35.96
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} Visualisation {-}{-}{-}}
+\NormalTok{data\_compare }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (var }\ControlFlowTok{in}\NormalTok{ variables\_a\_corriger) \{}
+\NormalTok{  temp }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+    \AttributeTok{Valeur   =} \FunctionTok{c}\NormalTok{(data[[var]], health\_clean[[var]]),}
+    \AttributeTok{Variable =}\NormalTok{ var,}
+    \AttributeTok{Statut   =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Avant"}\NormalTok{, }\StringTok{"Après"}\NormalTok{), }\AttributeTok{each =} \FunctionTok{nrow}\NormalTok{(data))}
+\NormalTok{  )}
+\NormalTok{  data\_compare }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_compare, temp)}
+\NormalTok{\}}
+
+\FunctionTok{ggplot}\NormalTok{(data\_compare, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Variable, }\AttributeTok{y =}\NormalTok{ Valeur, }\AttributeTok{fill =}\NormalTok{ Statut)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Comparaison avant / après correction des valeurs aberrantes"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"Variables"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Valeurs"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/outliers-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} Sauvegarde {-}{-}{-}}
+\FunctionTok{write.csv}\NormalTok{(health\_clean, }\StringTok{"health\_dataset\_clean.csv"}\NormalTok{, }\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{)}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{RAPPORT FINAL}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## RAPPORT FINAL
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"====================================}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## ====================================
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Observations totales :"}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(health\_clean), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Observations totales : 2000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Variables nettoyées  :"}\NormalTok{, }\FunctionTok{length}\NormalTok{(variables\_numeriques), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Variables nettoyées  : 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Fichier sauvegardé   : health\_dataset\_clean.csv}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Fichier sauvegardé   : health_dataset_clean.csv
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Nettoyage terminé avec succès !}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Nettoyage terminé avec succès !
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{head}\NormalTok{(health\_clean))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 9
+##   sex     age measurement_date   bmi percent_body_fat hand_grip_strength_kg
+##   <fct> <dbl> <date>           <dbl>            <dbl>                 <dbl>
+## 1 M        46 2019-01-19        26.5             45                    47  
+## 2 M        25 2018-03-16        28.8             45                    28  
+## 3 M        53 2017-06-02        25.7             45                    37.7
+## 4 M        46 2018-02-11        28               45                    48.9
+## 5 F        32 2018-01-25        25               57.7                  20  
+## 6 F        28 2018-11-06        24.7             60                    21.2
+## # i 3 more variables: sit_and_reach_cm <dbl>, sit_ups_count <dbl>,
+## #   vo2_estimate_ml_per_kg_min <dbl>
+\end{verbatim}
+
+\subsection{Analyse de la distribution des
+variables}\label{analyse-de-la-distribution-des-variables}
+
+L'étude de la distribution des variables quantitatives constitue une
+étape clé de l'analyse exploratoire. Elle permet d'évaluer visuellement
+la forme des distributions, d'identifier d'éventuelles asymétries et
+d'anticiper le choix des tests statistiques appropriés.
+
+Pour chaque variable numérique, un histogramme accompagné de sa courbe
+de densité est tracé, ainsi qu'un QQ-plot et un test de Shapiro-Wilk.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\NormalTok{target\_vars }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"hand\_grip\_strength\_kg"}\NormalTok{,}
+  \StringTok{"sit\_and\_reach\_cm"}\NormalTok{,}
+  \StringTok{"sit\_ups\_count"}\NormalTok{,}
+  \StringTok{"vo2\_estimate\_ml\_per\_kg\_min"}
+\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{ (var }\ControlFlowTok{in}\NormalTok{ target\_vars) \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Variable :"}\NormalTok{, var, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\NormalTok{  x }\OtherTok{\textless{}{-}}\NormalTok{ health\_clean[[var]]}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{summary}\NormalTok{(x))}
+
+\NormalTok{  mean\_x }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(x, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  sd\_x   }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(x, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  df\_var }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x)}
+
+  \CommentTok{\# Histogramme + densité}
+\NormalTok{  p1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df\_var, }\FunctionTok{aes}\NormalTok{(x)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ ..density..), }\AttributeTok{bins =} \DecValTok{30}\NormalTok{,}
+                   \AttributeTok{fill =} \StringTok{"lightblue"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{stat\_function}\NormalTok{(}\AttributeTok{fun =}\NormalTok{ dnorm,}
+                  \AttributeTok{args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{mean =}\NormalTok{ mean\_x, }\AttributeTok{sd =}\NormalTok{ sd\_x),}
+                  \AttributeTok{color =} \StringTok{"darkgreen"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Distribution —"}\NormalTok{, var), }\AttributeTok{x =}\NormalTok{ var, }\AttributeTok{y =} \StringTok{"Densité"}\NormalTok{)}
+
+  \FunctionTok{print}\NormalTok{(p1)}
+
+  \CommentTok{\# QQ Plot}
+\NormalTok{  p2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df\_var, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ x)) }\SpecialCharTok{+}
+    \FunctionTok{stat\_qq}\NormalTok{(}\AttributeTok{color =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{stat\_qq\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \FunctionTok{paste}\NormalTok{(}\StringTok{"QQ Plot —"}\NormalTok{, var))}
+
+  \FunctionTok{print}\NormalTok{(p2)}
+
+  \CommentTok{\# Test de Shapiro{-}Wilk}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(}\FunctionTok{na.omit}\NormalTok{(x)) }\SpecialCharTok{\textless{}=} \DecValTok{5000}\NormalTok{) \{}
+\NormalTok{    sh }\OtherTok{\textless{}{-}} \FunctionTok{shapiro.test}\NormalTok{(x)}
+    \FunctionTok{print}\NormalTok{(sh)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"Test de Shapiro{-}Wilk non applicable (n \textgreater{} 5000 observations)}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \}}
+
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## --------------------------------------------------
+## Variable : hand_grip_strength_kg 
+## --------------------------------------------------
+## 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    7.40   27.88   36.40   35.96   43.70   67.44
+\end{verbatim}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/distribution-1} \end{center}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/distribution-2} \end{center}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  x
+## W = 0.99336, p-value = 7.622e-08
+## 
+## 
+## 
+## --------------------------------------------------
+## Variable : sit_and_reach_cm 
+## --------------------------------------------------
+## 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -14.900   3.700   7.900   7.887  11.900  34.400
+\end{verbatim}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/distribution-3} \end{center}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/distribution-4} \end{center}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  x
+## W = 0.99911, p-value = 0.441
+## 
+## 
+## 
+## --------------------------------------------------
+## Variable : sit_ups_count 
+## --------------------------------------------------
+## 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    5.00   15.00   17.00   17.62   20.00   33.00
+\end{verbatim}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/distribution-5} \end{center}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/distribution-6} \end{center}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  x
+## W = 0.99218, p-value = 7.357e-09
+## 
+## 
+## 
+## --------------------------------------------------
+## Variable : vo2_estimate_ml_per_kg_min 
+## --------------------------------------------------
+## 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   10.00   31.50   36.40   36.28   41.20   60.10
+\end{verbatim}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/distribution-7} \end{center}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/distribution-8} \end{center}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  x
+## W = 0.99956, p-value = 0.9484
+\end{verbatim}
+
+\subsection{Standardisation des
+données}\label{standardisation-des-donnuxe9es}
+
+Avant de réaliser l'Analyse en Composantes Principales (ACP), il est
+nécessaire de standardiser les variables quantitatives. En effet, les
+variables étudiées ne sont pas exprimées dans les mêmes unités (kg, cm,
+années, etc.), ce qui pourrait biaiser l'analyse en donnant plus de
+poids aux variables ayant de grandes valeurs numériques.
+
+La standardisation transforme les variables afin qu'elles aient une
+\textbf{moyenne nulle} et un \textbf{écart-type égal à 1}, garantissant
+une contribution équivalente de chaque variable à l'ACP.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(FactoMineR)}
+\FunctionTok{library}\NormalTok{(factoextra)}
+
+\NormalTok{variables\_quantitatives }\OtherTok{\textless{}{-}}\NormalTok{ num\_vars}
+
+\NormalTok{data\_numeric }\OtherTok{\textless{}{-}}\NormalTok{ health\_clean }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(variables\_quantitatives))}
+\NormalTok{data\_scaled  }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(data\_numeric)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Analyse Factorielle --- ACP}\label{analyse-factorielle-acp}
+
+\subsection{Objectif de l'ACP}\label{objectif-de-lacp}
+
+L'Analyse en Composantes Principales (ACP) a été réalisée afin de
+\textbf{réduire la dimension} des données physiologiques et
+anthropométriques tout en conservant le maximum d'information contenue
+dans les variables initiales. Cette méthode permet également
+d'identifier les relations existantes entre les variables étudiées ainsi
+que les profils des individus selon leurs caractéristiques physiques et
+physiologiques.
+
+Les variables quantitatives utilisées sont : âge, IMC, pourcentage de
+masse grasse, force de préhension, flexibilité, endurance abdominale
+(sit-ups) et VO₂ max.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res.pca }\OtherTok{\textless{}{-}} \FunctionTok{PCA}\NormalTok{(data\_scaled, }\AttributeTok{graph =} \ConstantTok{FALSE}\NormalTok{)}
+
+\NormalTok{eig.val }\OtherTok{\textless{}{-}} \FunctionTok{get\_eigenvalue}\NormalTok{(res.pca)}
+\NormalTok{eig.val}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       eigenvalue variance.percent cumulative.variance.percent
+## Dim.1  1.9702193        28.145991                    28.14599
+## Dim.2  1.2944069        18.491527                    46.63752
+## Dim.3  1.1507254        16.438934                    63.07645
+## Dim.4  0.9400499        13.429285                    76.50574
+## Dim.5  0.7857555        11.225078                    87.73082
+## Dim.6  0.5765042         8.235774                    95.96659
+## Dim.7  0.2823388         4.033411                   100.00000
+\end{verbatim}
+
+\textbf{Interprétation des valeurs propres :}
+
+\begin{itemize}
+\tightlist
+\item
+  La \textbf{1ère composante principale} explique \textbf{28,1 \%} de la
+  variance totale.
+\item
+  La \textbf{2ème composante} explique \textbf{18,5 \%} de la variance
+  supplémentaire.
+\item
+  Les \textbf{deux premiers axes} résument ensemble \textbf{46,6 \%} de
+  l'information totale.
+\item
+  Les \textbf{trois premières composantes} expliquent \textbf{63,1 \%}
+  de la variance totale.
+\end{itemize}
+
+Selon le critère de Kaiser (\(\lambda > 1\)), les trois premières
+dimensions sont retenues car leurs valeurs propres sont supérieures à 1.
+
+\subsection{Graphiques de l'ACP}\label{graphiques-de-lacp}
+
+\subsubsection{Diagramme des valeurs propres (Scree
+Plot)}\label{diagramme-des-valeurs-propres-scree-plot}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_eig}\NormalTok{(res.pca, }\AttributeTok{addlabels =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/scree-plot-1} \end{center}
+
+Le diagramme des valeurs propres montre que les premières composantes
+principales concentrent une part importante de l'information. La
+première dimension explique à elle seule \textbf{28,1 \%} de la variance
+totale, et les trois premières composantes permettent de conserver plus
+de \textbf{63 \%} de la variance, ce qui constitue une représentation
+satisfaisante des données multidimensionnelles.
+
+\subsubsection{Cercle des corrélations des
+variables}\label{cercle-des-corruxe9lations-des-variables}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_pca\_var}\NormalTok{(res.pca)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/cercle-correlations-1} \end{center}
+
+Le cercle des corrélations met en évidence plusieurs relations
+significatives :
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{bmi} et \texttt{percent\_body\_fat} sont \textbf{fortement
+  corrélées positivement}.
+\item
+  \texttt{vo2\_estimate\_ml\_per\_kg\_min} et \texttt{sit\_ups\_count}
+  sont proches, traduisant une relation positive entre endurance
+  cardiovasculaire et performance musculaire.
+\item
+  Une \textbf{opposition} est observée entre les variables de
+  performance physique et les variables de composition corporelle.
+\item
+  La variable \texttt{age} présente une contribution plus modérée sur
+  les deux premiers axes.
+\end{itemize}
+
+\subsubsection{Contribution des variables à la 1ère composante
+principale}\label{contribution-des-variables-uxe0-la-1uxe8re-composante-principale}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_contrib}\NormalTok{(res.pca, }\AttributeTok{choice =} \StringTok{"var"}\NormalTok{, }\AttributeTok{axes =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/contrib-axe1-1} \end{center}
+
+La première composante principale est principalement construite par les
+variables liées à la condition physique générale :
+\texttt{hand\_grip\_strength\_kg},
+\texttt{vo2\_estimate\_ml\_per\_kg\_min} et \texttt{sit\_ups\_count}. La
+variable \texttt{percent\_body\_fat} y apparaît opposée, indiquant qu'un
+taux élevé de graisse corporelle est associé à de moins bonnes
+performances physiques. Cette dimension peut être interprétée comme un
+\textbf{axe global de condition physique et de santé}.
+
+\subsubsection{Contribution des variables à la 2ème composante
+principale}\label{contribution-des-variables-uxe0-la-2uxe8me-composante-principale}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_contrib}\NormalTok{(res.pca, }\AttributeTok{choice =} \StringTok{"var"}\NormalTok{, }\AttributeTok{axes =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/contrib-axe2-1} \end{center}
+
+La deuxième composante principale est principalement liée à l'endurance
+physique et aux caractéristiques physiologiques. Les variables
+\texttt{age}, \texttt{vo2\_estimate\_ml\_per\_kg\_min} et
+\texttt{sit\_ups\_count} présentent les contributions les plus
+importantes. Cette dimension traduit une différenciation des individus
+selon leur \textbf{capacité cardiovasculaire et leur profil
+physiologique global}.
+
+\subsubsection{Projection des individus sur le plan
+factoriel}\label{projection-des-individus-sur-le-plan-factoriel}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_pca\_ind}\NormalTok{(res.pca)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/projection-individus-1} \end{center}
+
+La projection des individus montre une dispersion relativement
+importante des observations, traduisant une forte diversité des profils
+physiques dans le dataset. Certains regroupements apparaissent
+néanmoins, suggérant l'existence de profils homogènes, ce qui justifie
+l'utilisation ultérieure du clustering K-Means.
+
+\subsubsection{Qualité de représentation des variables
+(Cos²)}\label{qualituxe9-de-repruxe9sentation-des-variables-cosuxb2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_cos2}\NormalTok{(res.pca, }\AttributeTok{choice =} \StringTok{"var"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/cos2-1} \end{center}
+
+Les variables \texttt{hand\_grip\_strength\_kg},
+\texttt{percent\_body\_fat} et \texttt{vo2\_estimate\_ml\_per\_kg\_min}
+présentent les meilleurs cos², indiquant qu'elles sont correctement
+représentées sur le plan factoriel. À l'inverse,
+\texttt{sit\_and\_reach\_cm} présente une qualité de représentation plus
+faible.
+
+\subsubsection{Projection des individus selon le
+sexe}\label{projection-des-individus-selon-le-sexe}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_pca\_ind}\NormalTok{(}
+\NormalTok{  res.pca,}
+  \AttributeTok{habillage =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{sex}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/projection-sexe-1} \end{center}
+
+L'ajout de la variable illustrative \texttt{sex} met en évidence des
+différences partielles entre les profils masculins et féminins. La
+séparation reste toutefois partielle, suggérant également des
+caractéristiques communes entre les individus indépendamment du sexe.
+
+\subsubsection{Matrice des
+corrélations}\label{matrice-des-corruxe9lations}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(corrplot)}
+
+\FunctionTok{corrplot}\NormalTok{(}
+  \FunctionTok{cor}\NormalTok{(data\_scaled),}
+  \AttributeTok{method    =} \StringTok{"color"}\NormalTok{,}
+  \AttributeTok{type      =} \StringTok{"upper"}\NormalTok{,}
+  \AttributeTok{addCoef.col =} \StringTok{"black"}\NormalTok{,}
+  \AttributeTok{tl.col    =} \StringTok{"black"}\NormalTok{,}
+  \AttributeTok{tl.cex    =} \FloatTok{0.7}\NormalTok{,}
+  \AttributeTok{number.cex =} \FloatTok{0.6}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/matrice-correlations-1} \end{center}
+
+La matrice des corrélations met en évidence :
+
+\begin{itemize}
+\tightlist
+\item
+  Une \textbf{forte corrélation positive} entre \texttt{bmi} et
+  \texttt{percent\_body\_fat}.
+\item
+  Des \textbf{corrélations positives} entre les variables de performance
+  physique (\texttt{vo2\_estimate\_ml\_per\_kg\_min},
+  \texttt{sit\_ups\_count}, \texttt{hand\_grip\_strength\_kg}).
+\item
+  Des \textbf{corrélations négatives} entre composition corporelle et
+  performance physique.
+\end{itemize}
+
+Cette structure justifie pleinement l'utilisation de l'ACP pour résumer
+les relations multidimensionnelles entre les variables.
+
+\subsection{Conclusion de l'ACP}\label{conclusion-de-lacp}
+
+L'Analyse en Composantes Principales a permis de mettre en évidence les
+principales structures statistiques des données. Les résultats montrent
+que :
+
+\begin{itemize}
+\tightlist
+\item
+  La \textbf{1ère composante} représente essentiellement le niveau
+  global de condition physique.
+\item
+  La \textbf{2ème composante} est principalement liée à l'âge.
+\item
+  La \textbf{masse grasse} est négativement associée aux performances
+  physiques.
+\item
+  Les \textbf{capacités musculaires et cardiovasculaires} sont
+  positivement corrélées.
+\item
+  Des \textbf{différences entre les sexes} existent mais restent
+  partiellement superposées.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Classification des Individus --- Clustering
+K-Means}\label{classification-des-individus-clustering-k-means}
+
+\subsection{Objectif du clustering}\label{objectif-du-clustering}
+
+Après la réduction de dimension par l'ACP, une méthode de classification
+non supervisée a été appliquée afin d'identifier des groupes homogènes
+d'individus partageant des caractéristiques physiques similaires.
+L'algorithme \textbf{K-Means} a été retenu pour sa capacité à
+partitionner efficacement les individus en maximisant la similarité
+intra-cluster et la dissimilarité inter-clusters.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(cluster)}
+\FunctionTok{library}\NormalTok{(factoextra)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Choix du nombre de clusters --- Méthode du
+coude}\label{choix-du-nombre-de-clusters-muxe9thode-du-coude}
+
+Avant l'application du K-Means, la \textbf{méthode du coude}
+(\emph{Elbow Method}) a été utilisée pour déterminer le nombre optimal
+de clusters, en analysant l'évolution de l'inertie intra-cluster en
+fonction de K.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_nbclust}\NormalTok{(}
+\NormalTok{  data\_scaled,}
+\NormalTok{  kmeans,}
+  \AttributeTok{method =} \StringTok{"wss"}
+\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Méthode du coude pour le choix du nombre de clusters"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/elbow-1} \end{center}
+
+L'analyse du graphique montre une diminution importante de l'inertie
+jusqu'à \textbf{K = 3}, après quoi la réduction devient plus faible. Le
+choix de \textbf{trois clusters} apparaît donc comme un compromis
+satisfaisant entre simplicité et qualité de segmentation.
+
+\subsection{Application de K-Means}\label{application-de-k-means}
+
+L'algorithme K-Means est appliqué aux données standardisées avec trois
+groupes et le paramètre \texttt{nstart\ =\ 25} pour améliorer la
+stabilité de la solution.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\NormalTok{kmeans\_result }\OtherTok{\textless{}{-}} \FunctionTok{kmeans}\NormalTok{(}
+\NormalTok{  data\_scaled,}
+  \AttributeTok{centers =} \DecValTok{3}\NormalTok{,}
+  \AttributeTok{nstart  =} \DecValTok{25}
+\NormalTok{)}
+
+\NormalTok{kmeans\_result}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## K-means clustering with 3 clusters of sizes 617, 712, 671
+## 
+## Cluster means:
+##           age        bmi percent_body_fat hand_grip_strength_kg
+## 1  0.08329186 -0.2055530        1.2954349            -1.0070737
+## 2  0.61296942  0.4663638       -0.4985752             0.6944622
+## 3 -0.72701238 -0.3058493       -0.6621428             0.1891317
+##   sit_and_reach_cm sit_ups_count vo2_estimate_ml_per_kg_min
+## 1       0.22711787     0.3967906                -0.69566896
+## 2      -0.25049174    -0.4538260                -0.09412882
+## 3       0.05695736     0.1166979                 0.73956403
+## 
+## Clustering vector:
+##    [1] 2 3 2 3 1 1 1 3 2 2 1 2 3 1 1 1 1 2 2 1 2 1 1 1 3 2 1 3 2 1 3 1 1 2 3 3 1
+##   [38] 1 2 2 1 2 1 3 1 3 1 2 2 1 2 3 2 2 1 3 1 1 3 2 3 1 2 2 1 2 1 2 1 2 3 1 1 2
+##   [75] 3 3 3 1 3 1 3 3 2 1 1 3 3 2 2 2 1 2 2 3 2 2 3 3 1 1 1 2 1 2 2 1 2 3 1 1 1
+##  [112] 1 3 2 3 3 2 1 2 2 3 2 1 1 1 3 3 2 1 3 3 1 1 2 2 2 2 3 3 2 2 1 2 1 1 1 3 3
+##  [149] 3 1 3 1 3 2 2 1 2 2 1 3 3 2 3 2 1 3 2 1 1 3 3 1 3 1 2 1 3 2 3 1 3 1 3 3 1
+##  [186] 2 3 3 3 1 1 3 2 3 2 2 3 2 3 2 3 1 1 3 2 1 1 2 1 1 3 2 2 1 3 1 2 2 2 3 2 2
+##  [223] 1 3 1 1 2 3 3 3 2 2 3 2 1 2 1 1 2 1 3 3 2 3 1 2 2 2 3 3 1 3 3 1 1 3 3 2 3
+##  [260] 1 2 2 1 2 3 3 2 3 2 1 3 3 3 3 3 2 3 2 2 3 3 2 3 1 2 1 3 3 1 2 1 1 2 2 1 2
+##  [297] 3 1 3 1 1 3 3 3 2 3 2 3 3 1 2 1 1 2 3 3 2 1 3 1 2 2 2 1 2 3 3 2 3 1 2 2 3
+##  [334] 1 1 1 2 3 2 1 2 2 1 3 2 2 3 1 2 3 3 2 2 1 1 3 1 3 3 2 3 2 3 3 2 3 2 3 1 1
+##  [371] 1 1 1 2 1 1 3 1 2 1 1 3 2 2 3 2 1 1 2 2 3 2 3 3 2 2 3 2 2 2 1 2 3 2 2 3 3
+##  [408] 1 3 1 1 3 3 3 2 2 1 3 2 2 2 2 1 2 1 2 2 2 3 1 1 2 2 1 1 2 3 2 2 1 1 3 2 3
+##  [445] 3 3 2 2 3 1 2 3 2 3 1 1 1 2 1 1 1 2 3 3 3 2 1 2 1 2 1 2 1 3 3 3 1 3 3 2 2
+##  [482] 2 2 2 3 2 1 3 2 2 3 2 1 1 3 3 3 1 2 3 3 2 1 3 3 1 2 3 2 2 3 2 2 2 1 1 2 2
+##  [519] 3 1 3 2 3 3 2 2 2 1 1 2 2 3 3 2 3 2 2 1 3 1 2 2 1 2 3 3 1 2 3 2 3 3 3 2 2
+##  [556] 2 1 1 1 3 2 1 1 1 3 3 3 2 2 3 3 2 2 2 2 2 1 2 3 1 2 3 2 3 1 1 1 3 1 1 1 2
+##  [593] 1 3 2 2 2 1 1 1 1 1 1 1 1 3 1 2 2 3 1 3 3 1 2 3 1 1 2 3 1 1 2 2 3 2 2 3 1
+##  [630] 1 2 2 2 2 1 2 2 1 1 3 1 3 1 2 1 2 3 2 3 2 1 2 3 2 2 1 3 2 2 3 3 2 3 1 1 1
+##  [667] 1 3 1 1 1 2 1 3 2 2 1 3 3 3 2 1 1 2 2 2 2 1 2 1 2 2 3 1 1 3 1 3 1 2 2 1 3
+##  [704] 1 1 3 2 3 3 3 2 2 3 2 2 3 2 2 1 3 3 1 1 2 2 3 1 2 1 1 1 2 2 2 3 3 2 2 2 3
+##  [741] 3 1 3 3 1 2 3 2 3 3 1 2 3 2 1 3 2 3 2 3 1 1 1 2 1 3 2 3 3 2 2 2 1 2 2 1 1
+##  [778] 2 2 3 2 3 1 3 1 2 3 2 2 3 1 3 2 2 1 2 3 3 3 3 3 1 2 3 3 2 3 3 2 1 2 3 1 2
+##  [815] 2 3 3 3 1 2 3 1 2 3 3 2 3 3 3 2 1 3 1 1 2 3 2 2 3 3 1 3 1 2 1 3 1 3 2 3 1
+##  [852] 3 1 3 1 1 1 2 2 1 3 3 2 3 2 2 1 1 2 2 3 1 2 3 1 3 2 2 3 1 1 3 1 1 2 1 2 3
+##  [889] 1 3 2 2 2 2 2 1 1 2 1 1 1 1 1 2 2 3 3 3 3 3 3 1 2 3 3 2 1 3 2 1 2 2 3 2 3
+##  [926] 1 1 1 3 1 1 3 2 3 1 1 1 3 1 3 1 3 3 2 3 1 1 2 2 2 2 2 1 3 2 3 3 1 1 2 1 2
+##  [963] 1 2 1 2 2 1 2 3 3 2 3 1 3 1 1 1 3 3 2 2 1 3 2 2 3 2 1 1 2 2 1 2 2 1 2 1 3
+## [1000] 3 1 1 2 2 3 2 2 2 1 2 1 3 3 1 2 3 1 3 2 1 2 1 2 2 3 3 3 2 3 2 1 3 1 1 1 2
+## [1037] 3 3 1 1 2 3 1 2 2 3 1 1 2 1 3 3 2 3 3 2 3 3 2 2 2 3 2 3 3 2 1 1 3 1 1 3 1
+## [1074] 1 2 3 2 3 1 2 3 1 3 2 3 3 2 1 2 1 2 2 3 2 1 1 1 1 3 3 1 3 3 3 3 1 3 3 2 1
+## [1111] 2 1 1 3 3 2 3 2 1 1 2 2 3 3 3 3 1 2 2 1 2 3 3 1 2 1 3 2 2 2 3 2 2 3 1 3 3
+## [1148] 2 2 3 3 2 3 2 3 2 3 3 2 1 3 1 2 3 1 2 2 3 1 1 2 2 2 1 3 3 3 1 2 2 3 2 2 2
+## [1185] 1 2 2 1 1 2 1 2 2 2 3 2 3 2 3 1 3 1 1 3 2 3 2 3 1 3 2 2 1 3 2 1 1 3 2 1 2
+## [1222] 1 2 2 3 3 3 3 2 2 3 1 1 1 2 2 3 3 2 1 2 2 2 2 3 3 1 1 2 3 3 3 1 1 3 3 1 3
+## [1259] 1 3 1 2 1 2 1 1 2 3 2 1 2 2 3 1 2 3 1 2 1 3 3 3 2 1 2 3 1 3 3 1 3 1 2 3 3
+## [1296] 1 1 1 2 3 1 3 1 3 2 2 3 2 3 2 1 2 3 2 2 2 3 3 1 1 1 1 2 1 2 2 1 2 3 2 3 2
+## [1333] 1 1 3 3 1 3 1 3 1 3 3 3 3 2 2 1 2 1 2 2 3 2 2 3 2 3 1 2 3 1 2 2 3 1 2 2 1
+## [1370] 1 3 1 2 3 1 3 2 3 3 3 1 2 2 2 2 3 3 1 2 2 1 1 1 2 2 3 2 1 2 3 1 1 1 3 2 2
+## [1407] 3 3 2 2 1 1 1 1 2 3 1 1 3 3 1 3 1 1 2 3 1 3 3 2 3 2 3 3 1 1 1 3 1 3 3 1 2
+## [1444] 3 2 1 3 3 2 2 2 3 3 2 1 3 2 3 3 3 3 3 1 2 2 1 3 2 2 3 3 2 3 2 3 3 3 3 3 3
+## [1481] 2 1 3 1 2 3 2 2 2 3 1 3 1 1 2 3 3 2 3 2 3 2 1 2 3 3 2 2 2 3 3 2 3 1 1 1 2
+## [1518] 2 1 3 1 3 3 1 3 1 1 1 2 2 1 3 3 1 3 3 1 3 1 3 2 1 3 1 2 2 2 2 3 2 2 3 3 2
+## [1555] 1 1 3 2 3 2 2 1 2 1 3 2 3 1 2 3 3 1 3 3 1 1 1 2 2 3 1 2 2 1 2 1 2 2 2 2 2
+## [1592] 2 1 1 2 2 1 1 3 2 1 3 1 3 1 2 1 3 1 3 2 3 3 3 3 2 2 3 2 2 2 1 3 2 1 2 1 2
+## [1629] 1 3 2 3 3 2 2 1 3 1 2 3 3 2 2 3 1 2 1 2 3 2 1 3 1 3 3 3 3 1 3 2 2 2 2 3 3
+## [1666] 2 1 3 1 2 3 3 2 3 3 1 1 3 1 2 2 2 3 2 1 2 2 2 2 3 1 2 2 1 2 1 1 1 3 3 2 2
+## [1703] 1 2 2 1 1 1 2 3 1 1 3 2 1 3 1 2 2 1 1 1 1 1 2 1 3 3 2 3 1 3 2 3 1 2 2 1 2
+## [1740] 2 3 3 2 1 3 2 1 1 3 1 3 1 1 1 2 2 2 2 1 3 3 3 1 2 1 2 2 3 3 2 2 3 2 2 2 1
+## [1777] 2 2 1 3 1 3 3 2 3 2 2 3 1 3 1 2 2 3 1 1 2 1 1 1 3 3 2 1 2 3 3 1 1 1 3 2 1
+## [1814] 1 1 3 1 2 2 2 3 1 3 2 3 3 1 2 3 1 2 3 3 3 2 3 1 2 2 1 3 2 3 2 2 3 1 1 2 3
+## [1851] 1 2 2 3 3 1 2 3 3 2 2 3 1 2 2 2 1 1 1 2 3 1 2 3 2 3 2 3 1 2 3 3 2 3 1 2 1
+## [1888] 1 2 2 1 3 2 3 3 2 2 1 2 2 3 1 2 3 3 1 3 3 3 1 1 3 3 3 2 2 2 2 3 3 3 1 3 2
+## [1925] 2 1 1 2 2 1 2 2 3 3 3 2 1 3 3 3 1 3 2 3 2 2 3 1 3 3 1 1 3 3 3 2 2 2 3 2 1
+## [1962] 2 2 2 3 3 1 3 2 1 1 3 1 3 1 2 1 3 2 2 3 2 3 3 1 1 1 2 3 3 3 1 3 1 3 2 2 1
+## [1999] 1 1
+## 
+## Within cluster sum of squares by cluster:
+## [1] 3203.552 3148.571 3267.472
+##  (between_SS / total_SS =  31.3 %)
+## 
+## Available components:
+## 
+## [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
+## [6] "betweenss"    "size"         "iter"         "ifault"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{health\_clean}\SpecialCharTok{$}\NormalTok{cluster }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(kmeans\_result}\SpecialCharTok{$}\NormalTok{cluster)}
+\end{Highlighting}
+\end{Shaded}
+
+L'algorithme K-Means a segmenté les 2 000 individus en trois groupes aux
+tailles relativement équilibrées :
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Cluster & Nombre d'individus \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Cluster 1 & 617 \\
+Cluster 2 & 712 \\
+Cluster 3 & 671 \\
+\end{longtable}
+}
+
+\subsection{Visualisation des
+clusters}\label{visualisation-des-clusters}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_cluster}\NormalTok{(}
+\NormalTok{  kmeans\_result,}
+  \AttributeTok{data         =}\NormalTok{ data\_scaled,}
+  \AttributeTok{ellipse.type =} \StringTok{"norm"}\NormalTok{,}
+  \AttributeTok{geom         =} \StringTok{"point"}\NormalTok{,}
+  \AttributeTok{palette      =} \StringTok{"jco"}\NormalTok{,}
+  \AttributeTok{ggtheme      =} \FunctionTok{theme\_minimal}\NormalTok{()}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/visu-clusters-1} \end{center}
+
+Les résultats montrent une structuration relativement claire des
+clusters, confirmant la pertinence de la classification obtenue.
+
+\subsection{Analyse des profils par
+cluster}\label{analyse-des-profils-par-cluster}
+
+Les moyennes des variables quantitatives sont calculées pour chaque
+cluster afin d'interpréter les caractéristiques physiques et
+physiologiques de chaque groupe.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{profil\_clusters }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(}
+\NormalTok{  health\_clean[, variables\_quantitatives],}
+  \AttributeTok{by  =} \FunctionTok{list}\NormalTok{(}\AttributeTok{Cluster =}\NormalTok{ health\_clean}\SpecialCharTok{$}\NormalTok{cluster),}
+  \AttributeTok{FUN =}\NormalTok{ mean}
+\NormalTok{)}
+
+\NormalTok{profil\_clusters}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Cluster      age      bmi percent_body_fat hand_grip_strength_kg
+## 1       1 42.64182 23.31831         56.80810              25.14489
+## 2       2 49.63904 25.47626         44.35304              43.41297
+## 3       3 31.93741 22.99620         43.21746              37.98763
+##   sit_and_reach_cm sit_ups_count vo2_estimate_ml_per_kg_min
+## 1         9.264344      19.36305                   31.37423
+## 2         6.367697      15.62640                   35.61868
+## 3         8.232340      18.13264                   41.50119
+\end{verbatim}
+
+\textbf{Cluster 1 --- Profil à faible condition physique}
+
+Ce groupe se caractérise principalement par un pourcentage de graisse
+corporelle très élevé, une faible force musculaire et des capacités
+cardiovasculaires réduites (VO₂ max le plus faible parmi les trois
+groupes). Ce profil peut correspondre à des individus physiquement moins
+actifs ou présentant un risque accru lié à la sédentarité.
+
+\textbf{Cluster 2 --- Profil musculaire intermédiaire}
+
+Ce deuxième groupe correspond à des individus relativement plus âgés
+présentant une bonne force musculaire (force de préhension la plus
+élevée) et un indice de masse corporelle légèrement supérieur à la
+moyenne. Malgré un âge moyen plus élevé, les individus conservent des
+performances musculaires satisfaisantes, mais avec une endurance
+cardiovasculaire plus modérée.
+
+\textbf{Cluster 3 --- Profil sportif et performant}
+
+Ce troisième cluster regroupe les individus présentant la meilleure
+condition physique globale : âge moyen plus jeune, faible IMC, faible
+taux de graisse corporelle et meilleures capacités cardiovasculaires.
+Ces individus présentent globalement un profil plus sportif et
+physiquement performant.
+
+\subsection{Distribution des variables par
+cluster}\label{distribution-des-variables-par-cluster}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(health\_clean, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ cluster, }\AttributeTok{y =}\NormalTok{ bmi, }\AttributeTok{fill =}\NormalTok{ cluster)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Distribution du BMI par cluster"}\NormalTok{,}
+    \AttributeTok{x     =} \StringTok{"Cluster"}\NormalTok{,}
+    \AttributeTok{y     =} \StringTok{"IMC"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/boxplots-clusters-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(health\_clean, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ cluster, }\AttributeTok{y =}\NormalTok{ vo2\_estimate\_ml\_per\_kg\_min, }\AttributeTok{fill =}\NormalTok{ cluster)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Distribution du VO₂ max par cluster"}\NormalTok{,}
+    \AttributeTok{x     =} \StringTok{"Cluster"}\NormalTok{,}
+    \AttributeTok{y     =} \StringTok{"VO₂ max (ml/kg/min)"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/boxplots-clusters-2} \end{center}
+
+Les boxplots confirment des différences significatives entre les
+clusters en termes de composition corporelle et de performance
+cardiovasculaire, validant la capacité du modèle K-Means à segmenter
+efficacement les individus.
+
+\subsection{Conclusion du clustering}\label{conclusion-du-clustering}
+
+L'algorithme K-Means a permis d'identifier trois profils distincts
+d'individus à partir des variables biométriques et physiques étudiées.
+Les résultats montrent que les données présentent une structure
+naturelle permettant de distinguer différents niveaux de condition
+physique au sein de la population étudiée. Les clusters obtenus pourront
+servir de base pour des analyses décisionnelles ou des stratégies de
+suivi adaptées aux différents profils identifiés.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Analyse Combinée --- ACP et
+Clustering}\label{analyse-combinuxe9e-acp-et-clustering}
+
+\subsection{Projection des clusters sur le plan
+factoriel}\label{projection-des-clusters-sur-le-plan-factoriel}
+
+Les clusters obtenus par K-Means sont projetés sur le plan factoriel
+défini par les deux premières composantes principales de l'ACP,
+permettant d'observer leur répartition dans l'espace réduit.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_cluster}\NormalTok{(}
+\NormalTok{  kmeans\_result,}
+  \AttributeTok{data         =}\NormalTok{ data\_scaled,}
+  \AttributeTok{ellipse.type =} \StringTok{"norm"}\NormalTok{,}
+  \AttributeTok{geom         =} \StringTok{"point"}\NormalTok{,}
+  \AttributeTok{palette      =} \StringTok{"jco"}\NormalTok{,}
+  \AttributeTok{ggtheme      =} \FunctionTok{theme\_minimal}\NormalTok{()}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rapport_ameliore_files/figure-latex/projection-clusters-1} \end{center}
+
+La projection montre une séparation relativement claire entre les
+groupes, confirmant que les dimensions extraites par l'ACP capturent
+efficacement les principales différences entre les profils physiques.
+Quelques zones de chevauchement restent observables, ce qui est fréquent
+dans des données multidimensionnelles réelles.
+
+\subsection{Relation entre ACP et
+segmentation}\label{relation-entre-acp-et-segmentation}
+
+L'ACP et le clustering K-Means sont deux méthodes complémentaires. L'ACP
+réduit la dimensionnalité des données tout en conservant l'essentiel de
+l'information statistique, facilitant ainsi la segmentation des
+individus en éliminant une partie du bruit et des redondances entre
+variables. Les axes factoriels représentent les principales sources de
+variabilité utilisées indirectement par l'algorithme de clustering.
+
+\subsection{Importance des variables dans la
+segmentation}\label{importance-des-variables-dans-la-segmentation}
+
+Les variables jouant un rôle particulièrement important dans la
+différenciation des clusters sont :
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Variables de performance physique} :
+  \texttt{vo2\_estimate\_ml\_per\_kg\_min},
+  \texttt{hand\_grip\_strength\_kg}, \texttt{sit\_ups\_count}
+\item
+  \textbf{Variables de composition corporelle} : \texttt{bmi},
+  \texttt{percent\_body\_fat} (permettent d'identifier les profils à
+  condition physique plus faible)
+\end{itemize}
+
+Ces résultats confirment les observations réalisées lors de l'ACP.
+
+\subsection{Conclusion de l'analyse
+combinée}\label{conclusion-de-lanalyse-combinuxe9e}
+
+L'analyse combinée de l'ACP et du clustering K-Means a permis d'obtenir
+une vision globale et structurée des données. L'ACP a facilité la
+compréhension des relations entre les variables et réduit la complexité
+du dataset, tandis que le clustering a permis d'identifier plusieurs
+profils homogènes d'individus.
+
+Les résultats montrent une \textbf{cohérence importante} entre les axes
+factoriels et les groupes identifiés. Cette approche combinée permet
+ainsi de mieux comprendre la structure multidimensionnelle des données
+et de révéler différents niveaux de condition physique au sein de la
+population étudiée.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\emph{Fin du rapport --- Analyse réalisée avec R.}
+
+\end{document}

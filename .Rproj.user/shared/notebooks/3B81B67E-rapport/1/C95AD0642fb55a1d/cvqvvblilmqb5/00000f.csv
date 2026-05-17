@@ -1,0 +1,7 @@
+"0","profil_clusters <- aggregate("
+"0","health_clean[,variables_quantitatives],"
+"0","by = list(Cluster = health_clean$cluster),"
+"0","mean"
+"0",")"
+"0",""
+"0","profil_clusters"

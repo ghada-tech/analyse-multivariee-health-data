@@ -1,0 +1,5 @@
+"0","library(FactoMineR)"
+"0","library(factoextra)"
+"0",""
+"0","data_numeric_clean <- health_clean[, sapply(health_clean, is.numeric)]"
+"0","data_scaled <- scale(data_numeric_clean)"

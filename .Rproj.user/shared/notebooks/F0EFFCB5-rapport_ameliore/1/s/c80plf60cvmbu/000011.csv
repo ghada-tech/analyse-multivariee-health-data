@@ -1,0 +1,3 @@
+"0","data <- read_excel(""DATA.xlsx"")"
+"0",""
+"0","head(data)"

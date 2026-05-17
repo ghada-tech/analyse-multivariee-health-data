@@ -1,0 +1,6 @@
+"0","fviz_pca_ind("
+"0","  res.pca,"
+"0","  geom = ""point"","
+"0","  col.ind = ""steelblue"","
+"0","  repel = TRUE"
+"0",")"

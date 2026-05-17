@@ -1,0 +1,7 @@
+"0","library(readxl)"
+"0","library(dplyr)"
+"0","library(ggplot2)"
+"0","library(corrplot)"
+"0","library(psych)"
+"2","Erreur dans library(psych) : aucun package nommé ‘psych’ n'est trouvé
+"

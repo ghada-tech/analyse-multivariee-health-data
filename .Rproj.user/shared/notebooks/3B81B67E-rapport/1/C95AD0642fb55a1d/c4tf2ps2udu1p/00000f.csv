@@ -1,0 +1,8 @@
+"0","fviz_nbclust("
+"0","data_scaled,"
+"0","kmeans,"
+"0","method = ""wss"""
+"0",") +"
+"0","labs("
+"0","title = ""Méthode du coude pour le choix du nombre de clusters"""
+"0",")"
