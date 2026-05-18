@@ -1,130 +1,125 @@
 ---
-title: "rapport"
-author: "ghada"
-date: "2026-05-14"
 output:
   word_document: default
   html_document: default
 ---
+ ---
+title: "Analyse Statistique des Données Physiologiques et Anthropométriques"
+author: "Ghada"
+date: "`r Sys.Date()`"
 
-# 1 Introduction
+output:
 
-## 1.1 Contexte du projet
+  word_document:
+    toc: true
+    toc_depth: 3
 
-Dans le domaine des sciences du sport, de la santé publique et de la biométrie, l’analyse statistique des
-données physiologiques et anthropométriques joue un rôle fondamental dans la compréhension des détermi
-nants de la condition physique humaine. Les indicateurs tels que l’âge, l’indice de masse corporelle (IMC), le
-pourcentage de masse grasse, la force musculaire, l’endurance et la capacité cardiovasculaire sont largement
-utilisés pour évaluer l’état de santé et le niveau de forme physique des individus.
-Cependant, ces variables présentent souvent des distributions complexes, influencées par des facteurs bi
-ologiques, sociaux et comportementaux, notamment le sexe. L’étude statistique rigoureuse de ces données
-nécessite donc l’utilisation conjointe de méthodes descriptives, de tests de normalité et de tests paramétriques
-et non paramétriques permettant d’identifier les relations significatives entre les variables.
-Dans ce contexte, le présent projet s’inscrit dans une démarche d’analyse statistique approfondie d’un jeu de
-données réel contenant des informations démographiques, anthropométriques et des mesures de performance
-physique. Ce travail vise à appliquer différentes techniques statistiques afin de valider des hypothèses,
-d’évaluer la structure des données et de comparer les groupes selon des variables pertinentes.
-Ce projet constitue également une application pratique des concepts théoriques abordés dans le cadre du
-cours de statistique, en mettant l’accent sur la rigueur méthodologique, l’interprétation correcte des résultats
-et la justification du choix des tests statistiques utilisés.
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    number_sections: true
+    theme: flatly
+    highlight: tango
+    df_print: paged
+---
 
-## 1.2 Objectif du projet
-L’objectif principal de ce projet est de réaliser une analyse statistique complète et structurée d’un ensem
-ble de données physiologiques et anthropométriques, en vue de mieux comprendre les relations entre les
-caractéristiques individuelles et les performances physiques.
-Plus précisément, ce projet vise à :
-• Explorer et décrire les données à l’aide de statistiques descriptives afin d’identifier les tendances cen
-trales, la dispersion et la structure globale des variables étudiées.
-• Vérifier les hypothèses de normalité des variables quantitatives à l’aide de tests statistiques appropriés,
-notamment le test de Shapiro–Wilk, afin de justifier le choix des méthodes paramétriques ou non
-paramétriques.
-• Détecter et analyser les valeurs aberrantes susceptibles d’influencer les résultats statistiques.
-• Comparer les groupes définis par la variable sexe à l’aide de tests paramétriques (tests t, ANOVA,
-tests de proportion) et non paramétriques (tests de Wilcoxon, tests des signes), selon la nature et la
-distribution des données.
-• Étudier les relations entre les variables à travers l’analyse des corrélations et l’évaluation de leur
-significativité statistique.
-Àtravers ces objectifs, ce projet cherche à démontrer la capacité des outils statistiques à fournir des résultats
-fiables et interprétables, tout en mettant en évidence l’importance du choix méthodologique dans l’analyse
-des données réelles.
-## 1.3 Description des données
-Les données utilisées dans ce projet proviennent d’un ensemble de mesures physiologiques, anthropométriques
-et de performance physique collectées auprès d’un échantillon d’individus. Chaque observation correspond
-à un individu et regroupe des informations démographiques, des caractéristiques corporelles ainsi que des
-indicateurs de condition physique.
-Les variables étudiées ont été sélectionnées afin de couvrir différents aspects de la condition physique, no
-tamment la composition corporelle, la force musculaire, l’endurance musculaire, la flexibilité et la capacité
-cardiorespiratoire. La présence de variables qualitatives et quantitatives permet de mener des analyses
-statistiques variées, incluant des comparaisons de groupes et des tests d’hypothèses.
-La variable sexe est utilisée comme variable de stratification afin d’analyser les différences potentielles entre
-les groupes masculins et féminins, tandis que les variables quantitatives sont exploitées pour évaluer les
-relations statistiques et les performances physiques.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center",
+  fig.width = 8,
+  fig.height = 5
+)
 
-| Variable | Type | Description |
-|----------|------|-------------|
-| sex | Qualitative | Sexe de l’individu (M/F) |
-| age | Quantitative | Âge de l’individu |
-| bmi | Quantitative | Indice de masse corporelle |
-| percent_body_fat | Quantitative | Pourcentage de masse grasse |
-| hand_grip_strength_kg | Quantitative | Force de préhension |
-| sit_ups_count | Quantitative | Nombre de sit-ups |
-| sit_and_reach_cm | Quantitative | Flexibilité |
-| vo2_estimate_ml_per_kg_min | Quantitative | VO2 max estimé |
+```
 
-# 2 Importation et Préparation des Données
-Cette section a pour objectif de présenter les étapes préliminaires nécessaires à l’analyse statistique des
-données. Elle comprend le chargement des bibliothèques requises, l’importation du jeu de données, une
-exploration initiale des variables ainsi que l’étude de la distribution des variables quantitatives. Ces étapes
-sont essentielles pour assurer la qualité des analyses statistiques réalisées par la suite et pour orienter le choix
-des méthodes appropriées.
-## 2.1 Chargement des packages
-L’analyse des données a été réalisée à l’aide du logiciel R, en utilisant plusieurs bibliothèques spécialisées.
-Ces packages permettent respectivement la lecture des fichiers de données, la manipulation des données, la
-visualisation graphique, l’analyse statistique et la modélisation.
-• openxlsx et readxl : importation de fichiers Excel ;
-• dplyr et tidyr : manipulation et transformation des données ;
-• ggplot2 et gridExtra : visualisation graphique ;
-• psych : statistiques descriptives ;
-• corrplot : visualisation des corrélations ;
-• MASS : méthodes statistiques avancées, notamment la régression pas à pas ;
-• naniar : détection et visualisation des valeurs manquantes.
-```{r}
+# Introduction
+
+## Contexte du projet
+
+Dans le domaine des sciences du sport, de la santé publique et de la biométrie, l’analyse statistique des données physiologiques et anthropométriques joue un rôle essentiel dans la compréhension des déterminants de la condition physique humaine. Les indicateurs tels que l’âge, l’indice de masse corporelle (IMC), le pourcentage de masse grasse, la force musculaire, l’endurance et la capacité cardiovasculaire sont largement utilisés pour évaluer l’état de santé et le niveau de performance physique des individus.
+
+Cependant, ces variables présentent souvent des structures complexes influencées par plusieurs facteurs biologiques et comportementaux. L’analyse simultanée de plusieurs variables nécessite donc l’utilisation de méthodes statistiques multivariées permettant de synthétiser l’information et d’identifier les relations sous-jacentes entre les caractéristiques étudiées.
+
+Le présent projet porte sur l’analyse d’un jeu de données réel contenant des informations physiologiques et anthropométriques collectées dans le cadre du National Fitness Assessment (NFA) en Corée du Sud. L’objectif est d’appliquer différentes méthodes statistiques afin d’explorer la structure des données, d’identifier des profils d’individus et d’interpréter les principaux facteurs liés à la condition physique.
+
+Ce travail constitue également une application pratique des méthodes étudiées en statistique exploratoire et en analyse multivariée, notamment l’Analyse en Composantes Principales (ACP) et les techniques de classification non supervisée.
+
+# Objectifs du projet
+
+L’objectif principal de cette étude est de réaliser une analyse multivariée des données physiologiques afin de :
+
+* réduire la dimension des données ;
+* identifier les variables les plus influentes ;
+* étudier les relations entre les variables physiologiques ;
+* détecter des groupes homogènes d’individus ;
+* interpréter les différents profils physiques obtenus ;
+* aider à la prise de décision dans un contexte sportif ou médical.
+
+# Description des données
+
+Les données utilisées proviennent du National Fitness Assessment (NFA), collectées entre 2015 et 2019 en Corée du Sud et disponibles sur Kaggle.
+
+Le dataset contient 2000 observations et plusieurs variables quantitatives et qualitatives décrivant la condition physique des individus.
+
+Chaque ligne correspond à un individu et regroupe des informations démographiques, anthropométriques et physiologiques.
+
+| Variable                   | Type         | Description                 |
+| -------------------------- | ------------ | --------------------------- |
+| sex                        | Qualitative  | Sexe de l’individu          |
+| age                        | Quantitative | Âge (années)                |
+| bmi                        | Quantitative | Indice de masse corporelle  |
+| percent_body_fat           | Quantitative | Pourcentage de masse grasse |
+| hand_grip_strength_kg      | Quantitative | Force de préhension (kg)    |
+| sit_and_reach_cm           | Quantitative | Flexibilité corporelle      |
+| sit_ups_count              | Quantitative | Endurance abdominale        |
+| vo2_estimate_ml_per_kg_min | Quantitative | VO₂ max estimé              |
+
+# Importation et Préparation des Données
+
+## Chargement des bibliothèques
+
+```{r packages}
 library(readxl)
 library(dplyr)
 library(ggplot2)
 library(corrplot)
+library(psych)
+library(cluster)
+library(FactoMineR)
+library(factoextra)
+library(naniar)
+
 ```
----
-## 2.2 Importation et exploration initiale
 
-Le jeu de données est importé à partir d’un fichier Excel à l’aide de la fonction read.xlsx. Une fois les
-données chargées, une exploration initiale est réalisée afin de visualiser les premières observations, de résumer
-les principales caractéristiques statistiques et d’examiner la structure des variables.
-Les fonctions head(), summary() et str() sont utilisées pour obtenir respectivement un aperçu des premières
-lignes du jeu de données, des statistiques descriptives générales et des informations sur le type de chaque
-variable.
+## Importation des données
 
-```{r}
+```{r importation}
 data <- read_excel("DATA.xlsx")
 
 head(data)
 dim(data)
 str(data)
-colnames(data)
-sapply(data, class)
-
-
+summary(data)
 ```
-```{r}
-library(dplyr)
 
+## Préparation des données
+
+```{r preparation}
 data$sex <- as.factor(data$sex)
 data$measurement_date <- as.Date(data$measurement_date)
 
-if("participant_id" %in% colnames(data)){
-data <-data %>%dplyr::select(-participant_id)
+if ("participant_id" %in% colnames(data)) {
+  data <- data %>% select(-participant_id)
 }
-head(data)
+
 num_vars <- c(
   "age",
   "bmi",
@@ -135,874 +130,622 @@ num_vars <- c(
   "vo2_estimate_ml_per_kg_min"
 )
 
-data_numeric <- data %>% select(all_of(num_vars))
+summary(data[num_vars])
+```
+Le jeu de données contient 2 000 observations et 10 variables, dont 7 quantitatives continues et 1 variable qualitative (sex). Les variables participant_id et measurement_date ont été exclues de l'analyse statistique car elles constituent des identifiants et ne portent pas d'information analytique.
+Âge : Les individus ont entre 19 et 64 ans, avec une moyenne de 41.5 ans et une médiane de 41 ans. La distribution est quasi-symétrique, ce qui indique une représentation équilibrée des tranches d'âge adultes dans l'échantillon.
+IMC (bmi) : La moyenne (23.98) et la médiane (24.00) sont presque identiques, ce qui reflète une distribution symétrique. La majorité des individus se situe dans la zone normopondérale (IMC entre 18.5 et 24.9), bien que certaines valeurs atteignent 37.1, indiquant une obésité modérée.
+Pourcentage de masse grasse (percent_body_fat) : Cette variable présente une anomalie notable : le 1er quartile et la médiane sont tous deux égaux à 45.0. Cela suggère qu'une proportion importante des individus masculins se voit attribuer une valeur fixe de 45%, probablement une valeur par défaut dans le protocole de collecte. Cette limite doit être prise en compte dans l'interprétation des résultats.
+Force de préhension (hand_grip_strength_kg) : Elle varie de 7.4 à 68 kg, avec une moyenne de 35.96 kg. Cette forte dispersion (IQR = 15.82 kg) s'explique principalement par les différences de sexe et d'âge entre les participants.
+Flexibilité (sit_and_reach_cm) : Des valeurs négatives sont observées (minimum : -14.9 cm), ce qui est physiologiquement normal dans ce test et indique une faible flexibilité des ischio-jambiers chez certains individus.
+Endurance abdominale (sit_ups_count) : Le nombre d'abdominaux varie de 5 à 33, avec une médiane de 17. La distribution est relativement concentrée (IQR = 5), suggérant une homogénéité relative dans cette capacité au sein de l'échantillon.
+VO₂ max estimé : La moyenne (36.28 ml/kg/min) correspond à une capacité aérobie modérée, cohérente avec une population générale d'adultes non nécessairement sportifs. Les valeurs extrêmes (10.0 à 60.1) reflètent la diversité de la condition cardiovasculaire dans l'échantillon.
 
-summary(data_numeric)
-```
-# 3 Analyse UNIVARIÉE
-```{r}
-summary(data)
-```
-## 3.1 Prépartion des données
-### 3.1.1 Vérification des doublons
-```{r}
+# Analyse Exploratoire des Données
+
+## Vérification des doublons
+
+```{r doublons}
 sum(duplicated(data))
 ```
-###3.1.2 Vérification des valeurs manquantes
-```{r}
-colSums(is.na(data))
 
-library(naniar)
+L'exécution de la fonction duplicated() sur l'ensemble du jeu de données retourne 0 doublon. Chaque ligne correspond à un individu distinct. Le jeu de données ne nécessite donc aucune suppression d'observations pour cause de redondance.
+## Valeurs manquantes
+
+```{r missing-values}
+colSums(is.na(data))
 vis_miss(data)
 ```
-### 3.1.3 Vérification des valeurs aberrantes
 
-Ladétectiondesvaleursaberrantesconstitueuneétape importantede l’analyseexploratoiredesdonnées,
-carlaprésenced’observationsextrêmespeutinfluencerlesstatistiquesdescriptives, lestestsd’hypothèseset
-lesmodèlesstatistiquesultérieurs.
-Dans cette étude, lesvaleurs aberrantes sont identifiées à l’aided’uneapprochegraphiquebasée sur les
-boxplots. Afindefaciliter lacomparaisonsimultanéedesdifférentesvariablesnumériques, lesdonnéessont
-d’abord transformées au format long, chaque observationétant associée àunevariable et àunevaleur
-correspondante.
-Lesboxplotsreprésentent ladistributiondesdonnéesàl’aidede lamédiane,desquartilesetdesétendues
-interquartiles.Lesobservationssituéesendehorsdesbornesdéfiniesparl’intervalle[𝑄1−1.5×𝐼𝑄𝑅,𝑄3+
-1.5×𝐼𝑄𝑅]sontconsidéréescommedesvaleursaberrantesetsontmisesenévidencegraphiquement.
-Cettevisualisationpermetd’identifierrapidementlesvariablesprésentantunefortedispersionouunnombre
-importantdevaleursextrêmes.
-```{r}
+L'application de colSums(is.na(data)) confirme l'absence totale de valeurs manquantes dans toutes les variables. La visualisation produite par vis_miss() affiche un taux de complétude de 100%, représenté par une carte entièrement bleue sans aucune zone grise. Le jeu de données est donc directement exploitable pour les analyses statistiques sans nécessiter d'imputation.
 
-# ==================================================
-# ANALYSE ET CORRECTION DES VALEURS ABERRANTES
-# ==================================================
+# Détection et Traitement des Valeurs Aberrantes
 
-# -----------------------------
-# 1. Fonction de détection
-# -----------------------------
+La méthode de l'intervalle interquartile (IQR) a été appliquée sur les 7 variables quantitatives. Une valeur est considérée aberrante si elle est inférieure à Q1 − 1.5×IQR ou supérieure à Q3 + 1.5×IQR.
+Les résultats sont les suivants :
 
-detecter_outliers <- function(variable, nom_variable){
+```{r outliers}
+detecter_outliers <- function(variable, nom_variable) {
 
-cat("\n====================================\n")
-cat("Analyse de :", nom_variable, "\n")
-cat("====================================\n")
+  Q1 <- quantile(variable, 0.25, na.rm = TRUE)
+  Q3 <- quantile(variable, 0.75, na.rm = TRUE)
+  IQR_value <- Q3 - Q1
 
-# Calcul Q1 et Q3
-Q1 <- quantile(variable, 0.25, na.rm = TRUE)
-Q3 <- quantile(variable, 0.75, na.rm = TRUE)
+  limite_basse <- Q1 - 1.5 * IQR_value
+  limite_haute <- Q3 + 1.5 * IQR_value
 
-# Calcul IQR
-IQR_value <- Q3 - Q1
+  outliers <- variable[variable < limite_basse | variable > limite_haute]
 
-# Limites
-limite_basse <- Q1 - 1.5 * IQR_value
-limite_haute <- Q3 + 1.5 * IQR_value
-
-# Détection outliers
-outliers_bas <- sum(variable < limite_basse, na.rm = TRUE)
-outliers_haut <- sum(variable > limite_haute, na.rm = TRUE)
-
-total_outliers <- outliers_bas + outliers_haut
-
-# Affichage
-cat("Outliers bas :", outliers_bas, "\n")
-cat("Outliers haut :", outliers_haut, "\n")
-cat("Total :", total_outliers, "\n")
-
-cat("Limite basse :", round(limite_basse,2), "\n")
-cat("Limite haute :", round(limite_haute,2), "\n")
-
-return(list(
-limite_basse = limite_basse,
-limite_haute = limite_haute
-))
+  cat("\nVariable :", nom_variable, "\n")
+  cat("Nombre d'outliers :", length(outliers), "\n")
 }
-
-# -----------------------------
-# 2. Fonction de correction
-# -----------------------------
-
-corriger_outliers <- function(variable){
-
-Q1 <- quantile(variable, 0.25, na.rm = TRUE)
-Q3 <- quantile(variable, 0.75, na.rm = TRUE)
-
-IQR_value <- Q3 - Q1
-
-limite_basse <- Q1 - 1.5 * IQR_value
-limite_haute <- Q3 + 1.5 * IQR_value
-
-# Copie variable
-variable_corrigee <- variable
-
-# Winsorization
-variable_corrigee[variable < limite_basse] <- limite_basse
-variable_corrigee[variable > limite_haute] <- limite_haute
-
-return(variable_corrigee)
-}
-
-# ==================================================
-# 3. ANALYSE DES VALEURS ABERRANTES
-# ==================================================
-
-cat("\nANALYSE DES VALEURS ABERRANTES\n")
-cat("====================================\n")
 
 variables_numeriques <- c(
-"age",
-"bmi",
-"percent_body_fat",
-"hand_grip_strength_kg",
-"sit_and_reach_cm",
-"sit_ups_count",
-"vo2_estimate_ml_per_kg_min"
+  "age",
+  "bmi",
+  "percent_body_fat",
+  "hand_grip_strength_kg",
+  "sit_and_reach_cm",
+  "sit_ups_count",
+  "vo2_estimate_ml_per_kg_min"
 )
 
-# Analyse de chaque variable
-for(var in variables_numeriques){
-
-if(var %in% names(data)){
-
-detecter_outliers(data[[var]], var)
-
+for (var in variables_numeriques) {
+  detecter_outliers(data[[var]], var)
 }
+```
+La variable sit_ups_count présente le nombre le plus élevé d'outliers (47), ce qui traduit une forte hétérogénéité de l'endurance abdominale dans la population étudiée. Ces valeurs ne constituent pas nécessairement des erreurs de mesure, mais reflètent la diversité réelle des profils physiques.
+
+## Correction des valeurs aberrantes
+Afin de limiter l'influence des valeurs extrêmes sans supprimer d'observations, une stratégie de winsorisation a été appliquée. Cette technique remplace les valeurs situées en dehors des bornes IQR par les valeurs limites correspondantes (Q1 − 1.5×IQR et Q3 + 1.5×IQR), préservant ainsi la structure globale des données.
+Cette approche est préférable à la suppression des observations car elle conserve la taille de l'échantillon (n = 2000) et évite d'introduire un biais de sélection. Elle est particulièrement adaptée aux données biométriques où les valeurs extrêmes peuvent être physiologiquement réelles.
+
+```{r winsorisation}
+corriger_outliers <- function(variable) {
+
+  Q1 <- quantile(variable, 0.25, na.rm = TRUE)
+  Q3 <- quantile(variable, 0.75, na.rm = TRUE)
+  IQR_value <- Q3 - Q1
+
+  limite_basse <- Q1 - 1.5 * IQR_value
+  limite_haute <- Q3 + 1.5 * IQR_value
+
+  variable[variable < limite_basse] <- limite_basse
+  variable[variable > limite_haute] <- limite_haute
+
+  return(variable)
 }
 
-# ==================================================
-# 4. CORRECTION DES OUTLIERS
-# ==================================================
-
-cat("\nCORRECTION DES VALEURS ABERRANTES\n")
-cat("====================================\n")
-
-# Copie dataset
 health_clean <- data
 
-# Variables à corriger
 variables_a_corriger <- c(
-"bmi",
-"percent_body_fat",
-"hand_grip_strength_kg"
+  "bmi", "percent_body_fat", "hand_grip_strength_kg",
+  "sit_and_reach_cm", "sit_ups_count", "vo2_estimate_ml_per_kg_min"
 )
 
-for(var in variables_a_corriger){
-
-if(var %in% names(data)){
-
-avant <- data[[var]]
-
-apres <- corriger_outliers(avant)
-
-health_clean[[var]] <- apres
-
-modifications <- sum(avant != apres, na.rm = TRUE)
-
-cat(var, ":", modifications, "valeurs corrigées\n")
+for (var in variables_a_corriger) {
+  health_clean[[var]] <- corriger_outliers(health_clean[[var]])
 }
-}
-
-# ==================================================
-# 5. COMPARAISON AVANT / APRES
-# ==================================================
-
-cat("\nCOMPARAISON AVANT/APRES\n")
-cat("====================================\n")
-
-comparer_stats <- function(avant, apres, nom){
-
-cat("\nVariable :", nom, "\n")
-
-cat("AVANT -> ")
-cat("Min :", round(min(avant, na.rm = TRUE),2),
-"Max :", round(max(avant, na.rm = TRUE),2),
-"Moyenne :", round(mean(avant, na.rm = TRUE),2), "\n")
-
-cat("APRES -> ")
-cat("Min :", round(min(apres, na.rm = TRUE),2),
-"Max :", round(max(apres, na.rm = TRUE),2),
-"Moyenne :", round(mean(apres, na.rm = TRUE),2), "\n")
-}
-
-for(var in variables_a_corriger){
-
-if(var %in% names(data)){
-
-comparer_stats(
-data[[var]],
-health_clean[[var]],
-var
-)
-
-}
-}
-
-# ==================================================
-# 6. VISUALISATION
-# ==================================================
-
-library(ggplot2)
-
-data_compare <- data.frame()
-
-for(var in variables_a_corriger){
-
-temp <- data.frame(
-Valeur = c(data[[var]], health_clean[[var]]),
-Variable = var,
-Statut = rep(c("Avant", "Après"),
-each = nrow(data))
-)
-
-data_compare <- rbind(data_compare, temp)
-}
-
-# Boxplot comparatif
-
-ggplot(data_compare,
-aes(x = Variable,
-y = Valeur,
-fill = Statut)) +
-
-geom_boxplot() +
-
-labs(
-title = "Comparaison avant/après correction des outliers",
-x = "Variables",
-y = "Valeurs"
-) +
-
-theme_minimal()
-# Sauvegarde dataset nettoyé
-
-write.csv(
-health_clean,
-"health_dataset_clean.csv",
-row.names = FALSE
-)
-
-# ==================================================
-# RAPPORT FINAL
-# ==================================================
-
-cat("\nRAPPORT FINAL\n")
-cat("====================================\n")
-
-total_observations <- nrow(health_clean)
-
-total_variables <- length(variables_numeriques)
-
-cat("Observations totales :", total_observations, "\n")
-
-cat("Variables nettoyées :", total_variables, "\n")
-
-cat("Fichier sauvegardé : health_dataset_clean.csv\n")
-
-cat("Nettoyage terminé avec succès !\n")
-
-# Aperçu final
-
-cat("\nAPERÇU DU DATASET NETTOYÉ :\n")
-
-print(head(health_clean))
-
 ```
-##3.2 Vérification de la densité des variables
-L’étudedeladistributiondesvariablesquantitativesconstitueuneétapeclédel’analyseexploratoire.Elle
-permetd’évaluervisuellement laformedesdistributions,d’identifierd’éventuellesasymétriesetd’anticiper
-lechoixdestestsstatistiquesappropriés.
-Pour chaquevariablenumérique, unhistogrammeaccompagnéde sacourbededensité est tracé. Cette
-représentationgraphique facilite l’appréciationde lanormalitéoude lanon-normalitédesdistributionset
-metenévidencelaprésenceéventuelledevaleursextrêmes.
-```{r}
 
-library(ggplot2)
+# Analyse de la Distribution des Variables
 
-# Variables à analyser
+L’étude des distributions permet d’évaluer la normalité des variables quantitatives et d’orienter le choix des méthodes statistiques.
 
+```{r distribution}
 target_vars <- c(
-"hand_grip_strength_kg",
-"sit_and_reach_cm",
-"sit_ups_count",
-"vo2_estimate_ml_per_kg_min"
+  "hand_grip_strength_kg",
+  "sit_and_reach_cm",
+  "sit_ups_count",
+  "vo2_estimate_ml_per_kg_min"
 )
 
-# Boucle analyse
+for (var in target_vars) {
 
-for(var in target_vars){
+  x <- health_clean[[var]]
+  df_var <- data.frame(x = x)
 
-cat("--------------------------------------------------\n")
-cat("Variable :", var, "\n")
-cat("--------------------------------------------------\n\n")
+  p <- ggplot(df_var, aes(x)) +
+    geom_histogram(aes(y = ..density..),
+                   bins = 30,
+                   fill = "lightblue",
+                   alpha = 0.7) +
+    geom_density(color = "red", linewidth = 1.2) +
+    theme_minimal() +
+    labs(title = paste("Distribution de", var))
 
-x <- health_clean[[var]]
+  print(p)
 
-# ==================================================
-# 1. Résumé statistique
-# ==================================================
-
-print(summary(x))
-
-# ==================================================
-# 2. Histogramme + densité
-# ==================================================
-
-mean_x <- mean(x, na.rm = TRUE)
-sd_x <- sd(x, na.rm = TRUE)
-
-df <- data.frame(x = x)
-
-p1 <- ggplot(df, aes(x)) +
-
-geom_histogram(
-aes(y = ..density..),
-bins = 30,
-fill = "lightblue",
-alpha = 0.6
-) +
-
-geom_density(
-color = "red",
-linewidth = 1.2
-) +
-
-stat_function(
-fun = dnorm,
-args = list(mean = mean_x, sd = sd_x),
-color = "darkgreen",
-linewidth = 1.2
-) +
-
-theme_minimal() +
-
-labs(
-title = paste("Distribution -", var),
-x = var,
-y = "Densité"
-)
-
-print(p1)
-
-# ==================================================
-# 3. QQ Plot
-# ==================================================
-
-p2 <- ggplot(df, aes(sample = x)) +
-
-stat_qq(color = "blue") +
-
-stat_qq_line(color = "red") +
-
-theme_minimal() +
-
-labs(
-title = paste("QQ Plot -", var)
-)
-
-print(p2)
-
-# ==================================================
-# 4. Test Shapiro-Wilk
-# ==================================================
-
-if(length(na.omit(x)) <= 5000){
-
-sh <- shapiro.test(x)
-
-print(sh)
-
-} else {
-
-cat("Shapiro non applicable (>5000 observations)\n")
-}
-
-cat("\n\n")
+  shapiro <- shapiro.test(sample(x, min(length(x), 5000)))
+  print(shapiro)
 }
 ```
-#3.3 Standardisation:
-Avant de réaliser l’Analyse en Composantes Principales (ACP), il est nécessaire de standardiser les variables quantitatives. En effet, les variables étudiées ne sont pas exprimées dans les mêmes unités (kg, cm, années, etc.), ce qui pourrait biaiser l’analyse en donnant plus de poids aux variables ayant de grandes valeurs numériques.
 
-La standardisation permet donc de transformer les variables afin qu’elles aient une moyenne nulle et un écart-type égal à 1. Cette étape garantit que toutes les variables contribuent de manière équivalente à l’ACP.
-
-Dans cette étude, nous sélectionnons uniquement les variables quantitatives issues du jeu de données nettoyé, puis nous appliquons la méthode de standardisation avant de réaliser l’ACP.
+Le test de Shapiro-Wilk a été appliqué sur les 4 variables de performance physique. Les résultats montrent deux profils distincts :
+hand_grip_strength_kg et sit_ups_count — La p-value est extrêmement faible (respectivement 7.62×10⁻⁸ et 7.36×10⁻⁹), bien inférieure au seuil de 0.05. L'hypothèse de normalité est donc rejetée pour ces deux variables. La force de préhension est influencée par la dualité hommes/femmes, tandis que l'endurance abdominale présente une distribution concentrée avec des valeurs extrêmes importantes (47 outliers détectés).
+sit_and_reach_cm et vo2_estimate_ml_per_kg_min — Les p-values sont très élevées (0.441 et 0.948), largement supérieures à 0.05. L'hypothèse de normalité ne peut pas être rejetée pour ces deux variables, ce qui est confirmé visuellement par la distribution quasi-gaussienne du VO₂ max.
+Conclusion générale : La normalité est vérifiée pour la flexibilité et la capacité aérobie, mais rejetée pour la force musculaire et l'endurance abdominale. Ce résultat ne remet pas en cause l'utilisation de l'ACP, qui est une méthode robuste ne supposant pas la normalité stricte des données. Cependant, la non-normalité de certaines variables devra être prise en compte lors de l'interprétation des axes factoriels et des profils de clusters.
 ```{r}
-library(FactoMineR)
-library(factoextra)
-
-variables_quantitatives <- num_vars
-
-data_numeric <- health_clean %>% select(all_of(variables_quantitatives))
-
-data_scaled <- scale(data_numeric)
-```
-Les données standardisées sont ensuite utilisées pour réaliser l’ACP afin d’explorer les relations entre les variables et réduire la dimension des données.
-
-#4 Analyse Factorielle : ACP (Analyse en Composantes Principales)
-## 4.1 Objectif de l’Analyse en Composantes Principales (ACP)
-L’Analyse en Composantes Principales (ACP) a été réalisée afin de réduire la dimension des données physiologiques et anthropométriques tout en conservant le maximum d’information contenue dans les variables initiales. Cette méthode permet également d’identifier les relations existantes entre les variables étudiées ainsi que les profils des individus selon leurs caractéristiques physiques et physiologiques.
-
-Les variables quantitatives utilisées dans l’analyse sont :
-
-âge ;
-indice de masse corporelle (IMC) ;
-pourcentage de masse grasse ;
-force de préhension manuelle ;
-flexibilité ;
-endurance abdominale (sit-ups) ;
-capacité cardiovasculaire estimée (VO2max).
-
-Avant l’ACP, les données ont été standardisées afin d’éliminer l’effet des différences d’unités de mesure entre les variables.
-``` {r}
-res.pca <- PCA(data_scaled, graph = FALSE)
-
-eig.val <- get_eigenvalue(res.pca)
-eig.val
-```
-La première composante principale explique :
-
-28.1%
-
-de la variance totale des données.
-
-Cela signifie que près d’un tiers de l’information contenue dans l’ensemble des variables peut être résumé par un seul axe factoriel.
-
-La deuxième composante explique :
-
-18.5%
-
-de la variance supplémentaire.
-
-Ainsi, les deux premiers axes résument ensemble :
-
-46.6%
-
-de l’information totale.
-
-Ce résultat est satisfaisant dans le contexte des données biométriques et physiologiques, où les phénomènes étudiés sont généralement complexes et multidimensionnels.
-
-Les trois premières composantes principales expliquent :
-
-63.1%
-
-de la variance totale, ce qui indique une bonne qualité globale de représentation des données.
-
-Selon le critère de Kaiser :
-
-λ>1
-
-les trois premières dimensions peuvent être retenues puisqu’elles possèdent des valeurs propres supérieures à 1.
-## 4.2 Graphiques ACP 
-### 4.2.1 Diagramme des valeurs propres (Scree Plot)
-```{r}
-fviz_eig(res.pca, addlabels = TRUE)
+ggplot(health_clean, aes(x = sex, y = hand_grip_strength_kg, fill = sex)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(title = "Force de préhension selon le sexe")
 
 
 ```
-Ce graphique montre :
-
-l’importance de chaque composante principale ;
-la quantité de variance expliquée par chaque axe ;
-le nombre d’axes à conserver.
-
-
-Le diagramme des valeurs propres montre que les premières composantes principales concentrent une part importante de l’information du dataset.
-
-La première dimension explique à elle seule 28.1 % de la variance totale, tandis que les deux premières dimensions représentent environ 46.6 % de l’information globale.
-
-Les trois premières composantes principales permettent de conserver plus de 63 % de la variance totale, ce qui constitue une représentation satisfaisante des données multidimensionnelles.
-
-Selon le critère de Kaiser, les trois premières composantes ont été retenues car leurs valeurs propres sont supérieures à 1.
-###4.2.2 Cercle des corrélations des variables
+L'échantillon est composé de deux groupes selon le sexe, avec une répartition déséquilibrée. On observe environ 650–700 femmes et 1300–1350 hommes, soit approximativement ⅓ de femmes et ⅔ d'hommes. Cette asymétrie dans la composition de l'échantillon doit être prise en compte dans l'interprétation des résultats, notamment pour les variables fortement influencées par le sexe comme la force de préhension et le pourcentage de masse grasse. Les analyses multivariées (ACP et clustering) seront donc potentiellement dominées par les caractéristiques physiologiques masculines en raison de leur surreprésentation.
 ```{r}
-fviz_pca_var(res.pca)
-
+cor_matrix <- cor(data_scaled)
+corrplot(cor_matrix, method = "color", type = "upper",
+         addCoef.col = "black", number.cex = 0.7,
+         tl.cex = 0.8, title = "Matrice de corrélation")
 ```
-Le cercle des corrélations met en évidence plusieurs relations significatives entre les variables biométriques et physiques.
-
-Les variables bmi et percent_body_fat sont fortement corrélées positivement, indiquant qu’une augmentation de l’indice de masse corporelle est généralement associée à une augmentation du pourcentage de graisse corporelle.
-
-Les variables liées à la performance physique, notamment vo2_estimate_ml_per_kg_min et sit_ups_count, apparaissent proches les unes des autres, traduisant une relation positive entre endurance cardiovasculaire et performance musculaire.
-
-Une opposition est observée entre les variables de performance physique et les variables de composition corporelle, ce qui suggère qu’un taux élevé de graisse corporelle est associé à une moins bonne condition physique.
-
-La variable age semble moins bien représentée sur les deux premiers axes factoriels, indiquant une contribution plus modérée à la structure principale des données.
-###4.2.3 Contribution des variables à la première composante principale
+La matrice révèle l'existence de deux axes de variation principaux dans les données :
+Axe 1 — Condition physique générale : percent_body_fat, hand_grip_strength_kg et vo2_estimate sont inter-corrélées (corrélations entre -0.53 et +0.28), formant un bloc cohérent qui opposera les individus à forte masse grasse aux individus musclés et endurants.
+Axe 2 — Flexibilité indépendante : sit_and_reach_cm présente des corrélations proches de zéro avec toutes les autres variables (0.12, -0.12, 0.07, -0.03), indiquant qu'elle apporte une information orthogonale, c'est-à-dire une dimension propre non expliquée par les autres variables.
+La présence de ces corrélations modérées à fortes justifie pleinement l'utilisation de l'ACP : les variables partagent de l'information commune qu'il est possible de synthétiser en un nombre réduit de composantes principales sans perte majeure d'information.
 ```{r}
-fviz_contrib(res.pca, choice = "var", axes = 1)
+ggplot(health_clean, aes(x = sex, fill = sex)) +
+  geom_bar() +
+  theme_minimal() +
+  labs(title = "Répartition par sexe")
 ```
-Ce graphique montre :
+Le boxplot confirme une différence très marquée de la force de préhension entre hommes et femmes :
 
-quelles variables contribuent le plus à l’axe 1 ;
-quelles variables définissent la première dimension
-La première composante principale est principalement construite par les variables liées à la condition physique générale.
+Les femmes (F) présentent une médiane autour de 27 kg, avec un IQR compris entre environ 22 et 32 kg, reflétant une distribution compacte et homogène.
+Les hommes (M) affichent une médiane nettement plus élevée, autour de 41 kg, avec un IQR s'étendant de 35 à 47 kg environ, indiquant une force globalement supérieure mais aussi plus variable.
 
-Les variables hand_grip_strength_kg, vo2_estimate_ml_per_kg_min et sit_ups_count contribuent fortement à cet axe, traduisant les capacités physiques et cardiovasculaires des individus.
+La différence entre les deux médianes est d'environ 14 kg, ce qui est physiologiquement cohérent avec les différences de masse musculaire entre les sexes. Les boîtes ne se chevauchent quasiment pas, confirmant que le sexe est un facteur discriminant majeur pour cette variable.
+On observe quelques outliers chez les deux groupes — notamment un individu masculin à plus de 65 kg et un individu féminin à environ 45 kg — mais ils restent marginaux et ont été partiellement traités par la winsorisation.
+Ce résultat explique directement l'épaulement bimodal observé dans l'histogramme de distribution globale de hand_grip_strength_kg : il résulte de la superposition des deux distributions (F et M) dans un graphique unique.
 
-À l’inverse, la variable percent_body_fat apparaît opposée aux variables de performance, indiquant qu’un taux élevé de graisse corporelle est associé à des performances physiques plus faibles.
+# Standardisation des Données
 
-Cette dimension peut ainsi être interprétée comme un axe global de condition physique et de santé.
-###4.2.4 Contribution des variables à la deuxième composante principale
-```{r}
-fviz_contrib(res.pca, choice = "var", axes = 2)
-```
-Ce graphique identifie :
+Avant de réaliser l’Analyse en Composantes Principales (ACP), les variables quantitatives doivent être standardisées afin d’éviter qu’une variable exprimée dans une grande unité domine l’analyse.
 
-les variables qui expliquent la deuxième dimension ;
-la signification statistique de l’axe 2.
-La deuxième composante principale semble principalement liée à l’endurance physique et aux caractéristiques physiologiques des individus.
+La standardisation permet d’obtenir des variables centrées réduites ayant une moyenne nulle et un écart-type égal à 1.
 
-Les variables age, vo2_estimate_ml_per_kg_min et sit_ups_count présentent les contributions les plus importantes sur cet axe.
-
-Cette dimension traduit une différenciation des individus selon leur capacité cardiovasculaire et leur profil physiologique global.
-###4.2.5 Projection des individus sur le plan factoriel
-```{r}
-fviz_pca_ind(res.pca) 
-```
-Ce graphique permet :
-
-de visualiser les individus ;
-d’identifier des regroupements ;
-de détecter des profils similaires ou atypiques.
-
-La projection des individus sur le plan factoriel montre une dispersion relativement importante des observations, ce qui traduit une forte diversité des profils physiques présents dans le dataset.
-
-Certains regroupements apparaissent néanmoins, suggérant l’existence de profils homogènes d’individus partageant des caractéristiques physiques similaires.
-
-Cette structuration des données justifie l’utilisation ultérieure de méthodes de classification telles que le clustering K-Means.
-###4.2.6 Qualité de représentation des variables (Cos²)
-```{r}
-fviz_cos2(res.pca, choice = "var")
-```
-Ce graphique mesure :
-
-la qualité de représentation des variables ;
-quelles variables sont bien expliquées par les axes factoriels.
-Les variables hand_grip_strength_kg, percent_body_fat et vo2_estimate_ml_per_kg_min présentent les meilleurs cos², indiquant qu’elles sont correctement représentées sur le plan factoriel formé par les deux premières composantes principales.
-
-À l’inverse, la variable sit_and_reach_cm présente une qualité de représentation plus faible, ce qui signifie qu’elle est moins bien expliquée par les deux premières dimensions de l’ACP.
-
-###4.2.7 ACP avec variable illustrative SEXE(Projection des individus selon le sexe)
-```{r}
-fviz_pca_ind(
-res.pca,
-habillage = data$sex
+```{r standardisation}
+variables_acp <- c(
+  "percent_body_fat",
+  "hand_grip_strength_kg",
+  "sit_and_reach_cm",
+  "sit_ups_count",
+  "vo2_estimate_ml_per_kg_min"
 )
+
+data_acp <- health_clean %>%
+  select(all_of(variables_acp))
+
+data_scaled <- scale(data_acp)
 ```
-Ce graphique permet :
 
-de comparer hommes et femmes ;
-d’observer les différences physiologiques entre groupes.
-L’ajout de la variable illustrative sex met en évidence certaines différences entre les profils masculins et féminins.
+# Analyse en Composantes Principales (ACP)
 
-Les individus présentent des répartitions partiellement distinctes sur le plan factoriel, traduisant des différences physiologiques et physiques entre les deux groupes.
+# Objectif de l’ACP
 
-Cette séparation reste toutefois partielle, ce qui suggère également l’existence de caractéristiques communes entre les individus indépendamment du sexe.
-###4.2.8 Corrélation entre variables
-```{r}
-library(corrplot)
+L’Analyse en Composantes Principales (ACP) a pour objectif de réduire la dimension des données tout en conservant un maximum d’information.
+
+Cette méthode permet également :
+
+* d’identifier les relations entre variables ;
+* de détecter les variables les plus influentes ;
+* de représenter les individus dans un espace réduit ;
+* de faciliter l’interprétation globale des données.
+
+# Vérification de l’adéquation de l’ACP
+
+## Test KMO
+
+```{r kmo}
+library(psych)
+KMO(data_scaled)
+```
+
+Une première tentative d’ACP incluant l’âge et le BMI a produit un indice KMO insuffisant (KMO = 0.48), indiquant une faible adéquation factorielle.
+
+Afin d’améliorer la qualité de l’analyse, les variables présentant une faible qualité de représentation ont été retirées.
+
+Après sélection des variables les plus pertinentes, l’indice KMO global obtenu est de 0.66, ce qui correspond à une adéquation moyenne mais acceptable pour une ACP exploratoire.
+
+Les valeurs MSA individuelles montrent que toutes les variables retenues contribuent correctement à la structure factorielle.
+
+"Les variables sit_ups_count (MSA = 0.79) et sit_and_reach_cm (MSA = 0.76) présentent les meilleures adéquations factorielles individuelles, indiquant qu'elles partagent davantage de variance commune avec les autres variables. La variable percent_body_fat affiche le MSA le plus faible (0.61), bien qu'encore acceptable pour une ACP exploratoire."
+
+## Test de Bartlett
+
+```{r bartlett}
+cortest.bartlett(cor(data_scaled), n = nrow(data_scaled))
+```
+
+Le test de sphéricité de Bartlett est significatif (p < 0.001), ce qui indique que les variables sont significativement corrélées entre elles.
+
+L’hypothèse d’indépendance des variables est donc rejetée, confirmant la pertinence statistique de l’ACP.
+
+# Matrice de Corrélation
+
+```{r corrplot}
+cor_matrix <- cor(data_acp)
 
 corrplot(
-cor(data_scaled),
-method = "color",
-type = "upper",
-addCoef.col = "black",
-tl.col = "black",
-tl.cex = 0.7,
-number.cex = 0.6
+  cor_matrix,
+  method = "color",
+  type = "upper",
+  addCoef.col = "black",
+  tl.col = "black",
+  tl.cex = 0.8
 )
 ```
-La matrice des corrélations met en évidence plusieurs relations significatives entre les variables biométriques et physiques.
 
-Une forte corrélation positive est observée entre les variables bmi et percent_body_fat, traduisant une relation directe entre l’indice de masse corporelle et le taux de graisse corporelle.
+La matrice de corrélation met en évidence plusieurs relations importantes entre les variables.
 
-Les variables liées aux performances physiques, notamment vo2_estimate_ml_per_kg_min, sit_ups_count et hand_grip_strength_kg, présentent également des corrélations positives, indiquant une cohérence globale des indicateurs de condition physique.
+Une corrélation négative est observée entre le pourcentage de masse grasse et les indicateurs de performance physique tels que la force de préhension et le VO₂ max.
 
-À l’inverse, les variables associées à la composition corporelle apparaissent négativement corrélées aux variables de performance physique, suggérant qu’un excès de graisse corporelle est associé à une diminution des capacités physiques.
+À l’inverse, la force musculaire et la capacité cardiovasculaire présentent une corrélation positive, traduisant une cohérence physiologique entre ces indicateurs.
 
-Cette structure de corrélation justifie pleinement l’utilisation de l’Analyse en Composantes Principales afin de résumer les relations multidimensionnelles entre les variables.
+La variable de flexibilité apparaît relativement indépendante des autres variables.
 
-## 4.3 Conclusion ACP : L’Analyse en Composantes Principales a permis de mettre en évidence les principales structures statistiques des données physiologiques et anthropométriques.
+# Réalisation de l’ACP
 
-Les résultats montrent que :
-
-la première composante principale représente essentiellement le niveau global de condition physique ;
-la deuxième composante est principalement liée à l’âge ;
-la masse grasse est négativement associée aux performances physiques ;
-les capacités musculaires et cardiovasculaires sont positivement corrélées ;
-les différences entre les sexes existent mais restent partiellement superposées.
-
-L’ACP a ainsi permis de réduire efficacement la dimension des données tout en conservant une proportion importante de l’information initiale.
-# 5. Classification des individus
-## 5.1 Objectif du clustering
-Après la réduction de dimension réalisée par l’Analyse en Composantes Principales (ACP), une méthode de classification non supervisée a été appliquée afin d’identifier des groupes homogènes d’individus partageant des caractéristiques physiques similaires.
-
-L’objectif principal du clustering est de segmenter la population étudiée selon plusieurs indicateurs biométriques et de performance physique tels que l’indice de masse corporelle, le taux de graisse corporelle, la force musculaire et les capacités cardiovasculaires.
-
-L’algorithme K-Means a été retenu car il permet de partitionner efficacement les individus en groupes homogènes tout en maximisant la similarité intra-cluster et la dissimilarité inter-clusters.
-
-Cette étape vise ainsi à mettre en évidence différents profils physiques et physiologiques au sein du dataset.
-
-```{r}
-library(cluster)
-library(factoextra)
+```{r acp}
+res.pca <- PCA(data_scaled, scale.unit = TRUE, graph = FALSE)
 ```
-## 5.2 Choix du nombre de clusters
-Avant l’application de l’algorithme K-Means, il est nécessaire de déterminer le nombre optimal de clusters.
 
-Pour cela, la méthode du coude (Elbow Method) a été utilisée. Cette méthode consiste à analyser l’évolution de l’inertie intra-cluster en fonction du nombre de groupes.
+# Choix du Nombre de Composantes
 
-Le principe consiste à identifier le point à partir duquel l’ajout de nouveaux clusters n’apporte plus d’amélioration significative.
+## Valeurs propres
 
-L’analyse du graphique obtenu montre une diminution importante de l’inertie jusqu’à K = 3, après quoi la réduction devient plus faible.
+```{r eigenvalues}
+res.pca$eig
+```
 
-Le choix de trois clusters apparaît donc comme un compromis satisfaisant entre simplicité et qualité de segmentation.
-```{r}
-fviz_nbclust(
-data_scaled,
-kmeans,
-method = "wss"
-) +
-labs(
-title = "Méthode du coude pour le choix du nombre de clusters"
+## Scree Plot
+
+```{r screeplot}
+fviz_eig(res.pca, addlabels = TRUE)
+```
+L'éboulis des valeurs propres montre une décroissance progressive sans cassure nette. La première composante domine clairement avec 39% de variance expliquée, suivie de la deuxième (19.9%), la troisième (18.1%), la quatrième (14.1%) et la cinquième (9%).
+Selon le critère de Kaiser (valeur propre > 1), seule la première composante (λ₁ = 1.95) dépasse strictement ce seuil. La deuxième composante présente une valeur propre de 0.993, très proche de 1, et apporte une information complémentaire non négligeable (19.9%).
+L'absence de coude franc dans l'éboulis est typique des données biométriques où les variables mesurent des dimensions physiologiques partiellement liées. Dans une perspective exploratoire, deux dimensions sont retenues, expliquant conjointement 58.83% de la variance totale. Ce taux, bien qu'inférieur à 70%, est jugé satisfaisant compte tenu du faible nombre de variables (5) et de la nature multidimensionnelle de la condition physique.
+
+
+# Cercle des Corrélations
+
+```{r cercle-correlation}
+fviz_pca_var(res.pca,
+             col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE)
+```
+
+Le cercle des corrélations représente les 5 variables dans le plan factoriel (Dim1 × Dim2). La longueur de chaque flèche indique la qualité de représentation de la variable sur ce plan — plus la flèche est proche du cercle unitaire, mieux la variable est représentée.
+Sur Dim1 (39%) — axe horizontal — on distingue deux groupes opposés : percent_body_fat orientée vers la droite, et hand_grip_strength_kg + vo2_estimate_ml_per_kg_min orientées vers la gauche. Cette opposition traduit un axe de condition physique globale : les individus à droite ont une masse grasse élevée et de faibles performances, ceux à gauche ont une bonne force musculaire et capacité aérobie.
+Sur Dim2 (19.9%) — axe vertical — sit_and_reach_cm pointe vers le haut, presque perpendiculairement à Dim1. Cette orthogonalité confirme que la flexibilité est une dimension indépendante, non corrélée aux autres capacités physiques.
+sit_ups_count se positionne dans le quadrant haut-droite, avec une contribution modérée aux deux axes, suggérant un lien partiel avec la flexibilité et la masse grasse.*
+Les couleurs confirment que percent_body_fat et hand_grip_strength_kg sont les variables les plus contributives (orange/rouge) à la construction des axes principaux.
+
+# Contributions des Variables
+
+```{r contributions}
+fviz_contrib(res.pca, choice = "var", axes = 1)
+fviz_contrib(res.pca, choice = "var", axes = 2)
+```
+
+Dim 1 :
+
+"percent_body_fat (≈35%) et hand_grip_strength_kg (≈31%) sont les variables les plus contributives à la première composante, toutes deux dépassant largement le seuil de référence de 20% (ligne rouge). vo2_estimate_ml_per_kg_min contribue également de manière significative (≈20%). En revanche, sit_ups_count (≈10%) et sit_and_reach_cm (≈4%) contribuent peu à cette dimension, confirmant que Dim1 est essentiellement un axe de composition corporelle et de condition cardio-musculaire."
+
+Dim 2 :
+
+"sit_and_reach_cm domine massivement la deuxième composante avec une contribution d'environ 68%, très largement au-dessus du seuil de 20%. vo2_estimate_ml_per_kg_min (≈15%) et sit_ups_count (≈10%) contribuent secondairement. percent_body_fat et hand_grip_strength_kg sont quasi-absents de cette dimension (< 5%), confirmant l'indépendance totale de la flexibilité par rapport aux autres capacités physiques."
+
+# Qualité de Représentation des Variables
+
+```{r cos2}
+fviz_cos2(res.pca, choice = "var", axes = 1:2)
+```
+
+Le graphique des cos² sur les deux premiers axes (Dim1 + Dim2) indique la qualité globale de représentation de chaque variable dans le plan factoriel retenu.
+
+sit_and_reach_cm (cos² ≈ 0.80) : excellente représentation — la flexibilité est très bien capturée par le plan factoriel, principalement via Dim2.
+percent_body_fat (cos² ≈ 0.70) : bonne représentation — la masse grasse est bien projetée, essentiellement sur Dim1.
+hand_grip_strength_kg (cos² ≈ 0.62) : représentation correcte sur Dim1.
+vo2_estimate_ml_per_kg_min (cos² ≈ 0.56) : représentation acceptable.
+sit_ups_count (cos² ≈ 0.30) : représentation faible — l'endurance abdominale n'est pas bien capturée par les deux premiers axes. Une partie de son information est portée par les dimensions 3 et 4, ce qui justifie l'exploration complémentaire de Dim3.
+
+# Projection des Individus
+
+```{r projection-individus}
+fviz_pca_ind(
+  res.pca,
+  geom = "point",
+  col.ind = "steelblue",
+  repel = TRUE
 )
 ```
-## 5.3 Application de K-Means
-Une fois le nombre optimal de clusters déterminé, l’algorithme K-Means a été appliqué aux données standardisées.
 
-Le clustering a été réalisé avec trois groupes afin de segmenter les individus selon leurs caractéristiques physiques et biométriques.
+La projection des 2000 individus sur le plan factoriel (Dim1 × Dim2) révèle une dispersion elliptique, plus étendue horizontalement que verticalement, cohérente avec la dominance de Dim1 (39%) sur Dim2 (20%).
+On n'observe pas de groupes clairement séparés à l'œil nu, ce qui est typique d'une population générale sans segmentation préétablie. Cependant, on distingue :
 
-Les données standardisées ont été utilisées afin d’éviter qu’une variable à grande échelle influence excessivement la classification.
+Une concentration centrale d'individus aux profils physiologiques moyens
+Des individus extrêmes à droite de Dim1 (forte masse grasse, faible performance)
+Des individus extrêmes à gauche de Dim1 (bonne condition physique, force élevée)
+Quelques individus isolés dans les valeurs extrêmes de Dim2 (flexibilité exceptionnelle ou très faible)
 
-Le paramètre nstart = 25 a été utilisé afin d’améliorer la stabilité de la solution et limiter les effets de l’initialisation aléatoire des centres.
-```{r}
+L'absence de clusters visuellement distincts dans ce nuage de points motive le recours à une méthode de classification non supervisée (K-means ou CAH) pour identifier des groupes homogènes que l'œil ne peut pas détecter directement.
+
+# Un biplot (individus + variables ensemble)
+
+```{r projection-individus}
+fviz_pca_biplot(res.pca,
+                col.var = "red",
+                col.ind = "steelblue",
+                alpha.ind = 0.3,
+                geom.ind = "point",  # ← points au lieu des numéros
+                repel = TRUE,
+                label = "var")       # ← labelliser uniquement les variables
+```
+Le biplot confirme visuellement les deux axes factoriels identifiés : un axe principal de condition physique globale (Dim1) opposant masse grasse et performances musculo-cardiovasculaires, et un axe secondaire de flexibilité (Dim2) indépendant du premier.
+La continuité du nuage de points sans rupture franche indique l'absence de groupes naturellement séparés à l'œil nu. Ce constat motive directement le recours à une méthode de classification non supervisée (K-means) afin de segmenter objectivement les individus en profils physiologiques homogènes, en s'appuyant sur les coordonnées factorielles issues de l'ACP."
+# Classification des Individus — K-Means
+
+# Objectif du Clustering
+
+Après la réduction de dimension par l’ACP, une méthode de classification non supervisée a été appliquée afin d’identifier des groupes homogènes d’individus.
+
+L’algorithme K-Means a été retenu pour sa capacité à partitionner efficacement les données selon la similarité des profils physiques.
+
+```{r data-pca}
+data_pca <- res.pca$ind$coord
+```
+
+# Choix du Nombre de Clusters
+
+## Méthode du Coude
+
+```{r elbow}
+fviz_nbclust(data_pca, kmeans, method = "wss")
+```
+La courbe de l'inertie intra-cluster (Within Sum of Squares) décroît rapidement de k=1 à k=3, puis s'aplatit progressivement. Une inflexion notable est observable entre k=2 et k=3 : le gain en compacité devient marginal au-delà de 3 clusters. Cette méthode suggère donc k=3 comme point d'équilibre entre compacité des groupes et simplicité du modèle.
+
+## Méthode de la Silhouette
+
+```{r silhouette}
+fviz_nbclust(data_pca, kmeans, method = "silhouette")
+```
+La silhouette moyenne atteint son maximum à k=2 (≈ 0.31), indiquant que deux clusters constituent la partition la plus compacte et la mieux séparée statistiquement. Cependant, cette valeur de 0.31 reste modérée, reflétant le chevauchement naturel des profils physiologiques dans cet échantillon. À partir de k=3, la silhouette chute à ≈ 0.20 puis se stabilise autour de 0.16–0.17 pour k ≥ 5, sans amélioration significative. Cette stabilisation confirme que k=3 est acceptable malgré un léger sacrifice de cohésion intra-cluster, justifié par le gain interprétatif.
+
+## Choix du nombre de K : 
+La méthode de la silhouette suggère k=2 (largeur moyenne = 0.31), mais ce nombre de clusters produit une segmentation trop grossière pour être interprétable dans un contexte biométrique. La méthode du coude montre une inflexion notable entre k=2 et k=3, après quoi le gain en inertie devient marginal. Le choix de k=3 représente donc le meilleur compromis entre parcimonie statistique et richesse interprétable, permettant de distinguer trois profils physiologiques distincts et cohérents avec la littérature en sciences du sport.
+
+# Application du K-Means
+
+```{r kmeans}
 set.seed(123)
 
-kmeans_result <- kmeans(
-data_scaled,
-centers = 3,
-nstart = 25
-)
+res.km <- kmeans(data_pca, centers = 3, nstart = 25)
 
-kmeans_result
-health_clean$cluster <- as.factor(kmeans_result$cluster)
+health_clean$cluster <- as.factor(res.km$cluster)
+
+table(res.km$cluster)
 ```
-L’algorithme K-Means a permis de segmenter les 2000 individus du dataset en trois groupes homogènes.
 
-Les clusters obtenus présentent des tailles relativement équilibrées :
+# Visualisation des Clusters
 
-Cluster 1 : 617 individus
-Cluster 2 : 712 individus
-Cluster 3 : 671 individus
-
-Cette répartition équilibrée indique que la classification ne produit pas de groupes artificiellement dominants et confirme la stabilité de la segmentation obtenue.
-
-Les centres des clusters correspondent aux moyennes standardisées des variables étudiées et permettent d’interpréter les caractéristiques spécifiques de chaque profil.
-## 5.4 Visualisation des clusters
-Afin d’évaluer visuellement la qualité de la segmentation obtenue, les clusters ont été projetés sur le plan factoriel défini par les deux premières composantes principales de l’ACP.
-
-Cette représentation permet d’observer la séparation entre les groupes ainsi que la répartition des individus dans l’espace réduit.
-
-Les résultats montrent une structuration relativement claire des clusters, ce qui confirme la pertinence de la classification obtenue par l’algorithme K-Means.
-```{r}
+```{r visualisation-clusters}
 fviz_cluster(
-kmeans_result,
-data = data_scaled,
-ellipse.type = "norm",
-geom = "point",
-palette = "jco",
-ggtheme = theme_minimal()
+  res.km,
+  data = data_pca,
+  geom = "point",
+  ellipse.type = "norm"
 )
 ```
-## 5.6 Analyse des profils
-Afin d’interpréter les caractéristiques de chaque cluster, les moyennes des variables quantitatives ont été calculées pour chaque groupe.
+La visualisation des trois clusters dans le plan factoriel révèle une séparation partielle des groupes. Le cluster 2 (vert) occupe la partie droite positive de Dim1, formant un groupe relativement bien délimité. Les clusters 1 (rouge) et 3 (bleu) se situent dans la partie gauche et centrale, avec un chevauchement important de leurs ellipses de confiance.
+Cette superposition partielle est cohérente avec la silhouette modérée observée (≈ 0.20 pour k=3) et s'explique par la continuité naturelle des profils physiologiques : il n'existe pas de frontière biologique nette entre un individu en bonne condition physique et un individu en condition physique excellente — la transition est progressive.*
+Malgré ce chevauchement, les centroïdes des trois clusters sont distincts, confirmant que la segmentation capture bien trois tendances physiologiques différentes.
 
-Cette analyse permet d’identifier les spécificités physiques et physiologiques des différents profils détectés par l’algorithme K-Means.
-
-Les résultats obtenus mettent en évidence des différences importantes entre les groupes en termes de composition corporelle, de performances musculaires et de capacités cardiovasculaires.
-```{r}
-profil_clusters <- aggregate(
-health_clean[,variables_quantitatives],
-by = list(Cluster = health_clean$cluster),
-mean
-)
-
-profil_clusters
+##Tableau des moyennes par cluster 
+```{r boxplots-clusters}
+profils <- health_clean %>%
+  group_by(cluster) %>%
+  summarise(
+    masse_grasse = mean(percent_body_fat),
+    force = mean(hand_grip_strength_kg),
+    flexibilite = mean(sit_and_reach_cm),
+    abdominaux = mean(sit_ups_count),
+    vo2 = mean(vo2_estimate_ml_per_kg_min),
+    age_moyen = mean(age),
+    n = n()
+  )
+print(profils)
 ```
-Cluster 1 — Profil à faible condition physique
-Ce groupe :
+Les clusters 1 et 3 présentent des masses grasses similaires (≈ 43.8% vs 43.9%), mais se distinguent clairement par la flexibilité (2.98 vs 11.7 cm) et le VO₂ max (37.3 vs 39.6). Le cluster 2 se démarque nettement par une masse grasse très élevée (56.9%) et une force de préhension très faible (25.1 kg), avec paradoxalement le plus grand nombre d'abdominaux (19.3).
 
-très forte graisse ;
-faible force ;
-faible cardio ;
-âge moyen.
+# Distribution des Variables par Cluster
 
-
-Le premier cluster regroupe des individus présentant une condition physique relativement faible.
-
-Ce groupe se caractérise principalement par :
-
-un pourcentage de graisse corporelle très élevé ;
-une faible force musculaire ;
-des capacités cardiovasculaires réduites.
-
-Le niveau moyen de VO2 est le plus faible parmi les trois groupes, ce qui traduit une endurance physique limitée.
-
-Ce profil peut correspondre à des individus physiquement moins actifs ou présentant un risque accru lié
-
-Cluster 2 — Profil musculaire intermédiaire
-Ce groupe :
-
-plus âgé ;
-très forte force ;
-BMI plus élevé ;
-cardio moyen.
-
-
-Le deuxième cluster correspond à des individus relativement plus âgés présentant une bonne force musculaire.
-
-Ce groupe possède :
-
-la force de préhension la plus élevée ;
-un indice de masse corporelle légèrement supérieur à la moyenne ;
-des capacités cardiovasculaires modérées.
-
-Malgré un âge moyen plus élevé, les individus de ce cluster conservent des performances musculaires satisfaisantes.
-
-Ce profil peut correspondre à des individus ayant une bonne capacité physique générale mais une endurance cardiovasculaire plus modérée.
-
-Cluster 3 — Profil sportif et performant
-Ce groupe :
-
-plus jeunes ;
-meilleur cardio ;
-faible BMI ;
-bonne endurance.
-Le troisième cluster regroupe les individus présentant la meilleure condition physique globale.
-
-Ce groupe se caractérise par :
-
-un âge moyen plus jeune ;
-un faible indice de masse corporelle ;
-un taux de graisse corporelle plus faible ;
-les meilleures capacités cardiovasculaires parmi les trois clusters.
-
-Les individus appartenant à ce groupe présentent globalement un profil plus sportif et physiquement performant.
-
-
-INTERPRÉTATION GLOBALE DES CLUSTERS
-
-L’analyse des clusters met en évidence trois profils physiques distincts au sein de la population étudiée.
-
-Le premier groupe correspond à des individus présentant une forte composition graisseuse et des performances physiques limitées.
-
-Le deuxième groupe représente un profil intermédiaire caractérisé par une bonne force musculaire mais des capacités cardiovasculaires modérées.
-
-Enfin, le troisième cluster regroupe les individus les plus jeunes et les plus performants physiquement, avec une meilleure endurance cardiovasculaire et une composition corporelle plus favorable.
-
-Cette segmentation confirme l’existence de profils physiques différenciés au sein du dataset étudié.
-#5.7 Boxplots des variables par cluster
-```{r}
-library(ggplot2)
-
-ggplot(
-health_clean,
-aes(x = cluster, y = bmi, fill = cluster)
-) +
-geom_boxplot() +
-theme_minimal() +
-labs(
-title = "Distribution du BMI par cluster",
-x = "Cluster",
-y = "BMI"
-)
-ggplot(
-health_clean,
-aes(x = cluster, y = vo2_estimate_ml_per_kg_min, fill = cluster)
-) +
-geom_boxplot() +
-theme_minimal() +
-labs(
-title = "Distribution du VO2 par cluster",
-x = "Cluster",
-y = "VO2"
-)
+```{r boxplots-clusters}
+ggplot(health_clean,
+       aes(x = cluster,
+           y = sit_and_reach_cm,
+           fill = cluster)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(
+    title = "Distribution de la flexibilité (sit_and_reach_cm) par cluster",
+    x = "Cluster",
+    y = "sit_and_reach_cm"
+  )
 ```
-Les boxplots mettent en évidence des différences significatives entre les clusters.
+La distribution de la flexibilité (sit_and_reach_cm) varie sensiblement selon les clusters :
 
-Certains groupes présentent des niveaux de performance physique plus élevés tandis que d’autres se distinguent par une composition corporelle moins favorable.
+Cluster 1 : médiane ≈ 4 cm, distribution compacte et centrée sur des valeurs basses. Ce groupe présente la flexibilité la plus faible.
+Cluster 2 : médiane ≈ 10 cm, avec une dispersion plus large (IQR ≈ 13 cm). Ce groupe affiche une flexibilité intermédiaire à bonne.
+Cluster 3 : médiane ≈ 11 cm, distribution étendue avec quelques outliers au-dessus de 25 cm. Ce groupe présente la meilleure flexibilité en médiane.
 
-Ces différences confirment la capacité du modèle K-Means à segmenter efficacement les individus selon leurs caractéristiques biométriques.
+Ces différences confirment que la flexibilité contribue à distinguer les clusters, bien qu'elle soit principalement portée par Dim2 dans l'ACP. Le chevauchement entre clusters 2 et 3 sur cette variable suggère que la flexibilité seule ne suffit pas à les discriminer — c'est la combinaison avec les variables de Dim1 qui permet la séparation."
 
-5.8  Conclusion du clustering
-L’algorithme K-Means a permis d’identifier plusieurs profils distincts d’individus à partir des variables biométriques et physiques étudiées.
+Les boxplots montrent des différences visibles entre les clusters, notamment concernant le BMI et le VO₂ max.
 
-La segmentation obtenue met en évidence des différences significatives en termes de composition corporelle, de capacités cardiovasculaires et de performances physiques.
+Ces résultats confirment la pertinence de la segmentation obtenue.
+```{r boxplots-clusters}
+ggplot(health_clean,
+       aes(x = cluster,
+           y = vo2_estimate_ml_per_kg_min,
+           fill = cluster)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(
+    title = "Distribution du VO2 max par cluster",
+    x = "Cluster",
+    y = "VO2 max"
+  )
+```
+La distribution du VO₂ max estimé présente des différences nettes et cohérentes entre les trois clusters :
 
-Les résultats montrent que les données présentent une structure naturelle permettant de distinguer différents niveaux de condition physique au sein de la population étudiée.
+Cluster 1 : médiane ≈ 37 ml/kg/min, distribution modérément étendue (IQR ≈ 8). Ce groupe correspond à une capacité aérobie moyenne, avec quelques individus outliers en bas (≈ 18–20).
+Cluster 2 : médiane ≈ 31 ml/kg/min, valeurs concentrées entre 28 et 35. Ce groupe présente la capacité cardiovasculaire la plus faible des trois.
+Cluster 3 : médiane ≈ 40 ml/kg/min, avec une distribution étendue jusqu'à 45. Ce groupe rassemble les individus à meilleure capacité aérobie.
 
-Cette classification constitue une étape complémentaire à l’Analyse en Composantes Principales et permet une meilleure compréhension des profils présents dans le dataset.
+L'ordre Cluster 2 < Cluster 1 < Cluster 3 en termes de VO₂ max confirme la hiérarchie physiologique identifiée : le cluster 2 correspond au profil le moins performant cardiovasculairement, le cluster 3 au profil le plus endurant.
+```{r boxplots-clusters}
+ggplot(health_clean, aes(x = cluster, y = percent_body_fat, fill = cluster)) +
+  geom_boxplot() + theme_minimal() +
+  labs(title = "Masse grasse par cluster")
+```
+La distribution de la masse grasse confirme et précise le tableau des moyennes :
 
-Les clusters obtenus pourront également servir de base pour des analyses décisionnelles ou des stratégies de suivi adaptées aux différents profils identifiés.
-#Analyse combinée : lien entre réduction de dimension et segmentation
-## 6.1 Projection des clusters sur le plan factoriel
-Afin d’analyser la relation entre la réduction de dimension et la segmentation des individus, les clusters obtenus par l’algorithme K-Means ont été projetés sur le plan factoriel défini par les deux premières composantes principales de l’ACP.
+Cluster 1 (rouge) : boîte très compacte centrée autour de 45%, avec une très faible dispersion (IQR ≈ 0). Cette uniformité s'explique par la concentration des valeurs masculines à la valeur codée 45% — limite du dataset mentionnée en préparation des données.
+Cluster 2 (vert) : boîte très large entre 45% et 60%, avec médiane ≈ 60%. Ce cluster féminin présente une grande variabilité de masse grasse, reflétant la diversité naturelle des profils féminins.
+Cluster 3 (bleu) : distribution similaire au cluster 1, compacte autour de 45%, avec quelques outliers au-dessus de 50%.
 
-Cette représentation permet d’observer la manière dont les groupes d’individus se répartissent dans l’espace réduit et de vérifier la cohérence entre les résultats de l’ACP et ceux du clustering.
+Le chevauchement des clusters 1 et 3 sur cette variable confirme qu'ils ne se différencient pas par la masse grasse, mais par d'autres dimensions comme la flexibilité et le VO₂ max.
+```{r boxplots-clusters}
 
-```{r}
+  ggplot(health_clean, aes(x = cluster, y = hand_grip_strength_kg, fill = cluster)) +
+  geom_boxplot() + theme_minimal() +
+  labs(title = "Force de préhension par cluster")
+```
+Le boxplot de la force de préhension montre les différences les plus nettes entre clusters :
+
+Cluster 1 (rouge) : médiane ≈ 44 kg, boîte entre 38 et 50 kg. Ce groupe présente la force la plus élevée, avec une distribution compacte et homogène. Quelques outliers en bas (≈ 18 kg) et en haut (≈ 67 kg).
+Cluster 2 (vert) : médiane ≈ 26 kg, boîte entre 22 et 32 kg. Ce groupe féminin présente une force nettement inférieure, cohérente avec les différences biologiques de masse musculaire entre sexes. La dispersion est plus faible, signe d'homogénéité interne.
+Cluster 3 (bleu) : médiane ≈ 40 kg, distribution plus large (IQR ≈ 18 kg) avec des outliers jusqu'à 65 kg. Ce groupe présente une bonne force musculaire, légèrement inférieure au cluster 1.
+
+La séparation nette du cluster 2 par rapport aux clusters 1 et 3 sur cette variable explique pourquoi hand_grip_strength_kg est la variable la plus contributive à Dim1 de l'ACP : elle discrimine efficacement les profils féminins des profils masculins.
+
+##. Répartition hommes/femmes par cluster
+```{r boxplots-clusters}
+table(health_clean$cluster, health_clean$sex)
+prop.table(table(health_clean$cluster, health_clean$sex), margin = 1)
+```
+La répartition par sexe révèle une segmentation quasi-totalement déterminée par le sexe :
+
+Cluster 1 : 98.6% d'hommes (688M / 10F) → groupe masculin musclé
+Cluster 2 : 98.0% de femmes (595F / 12M) → groupe féminin
+Cluster 3 : 94.2% d'hommes (655M / 40F) → groupe masculin flexible
+
+Ce résultat est fondamental : il signifie que le K-Means a essentiellement capturé les différences physiologiques entre sexes plutôt que des profils de condition physique transversaux. La variable sex n'étant pas incluse dans l'ACP, cette segmentation émerge naturellement des données, confirmant que le sexe est le principal facteur structurant des profils physiologiques dans cet échantillon.
+
+# Nommage des profils
+
+La segmentation obtenue reflète principalement les différences physiologiques naturelles liées au sexe, la variable sex n'ayant pas été incluse comme variable active dans l'ACP. Ce résultat, bien que biologiquement attendu, confirme la robustesse de l'algorithme K-Means qui a su détecter cette structure sous-jacente sans information explicite sur le genre. Une analyse complémentaire séparée par sexe pourrait permettre d'identifier des sous-profils plus fins au sein de chaque groupe
+Sur la base des statistiques descriptives par cluster, trois profils physiologiques distincts ont été identifiés :
+
+Cluster 1 — "Force Musculaire" : groupe majoritairement masculin (98.6%), caractérisé par la force de préhension la plus élevée (41.8 kg) mais la flexibilité la plus faible (2.98 cm).
+Cluster 2 — "Profil Féminin" : groupe quasi-exclusivement féminin (98%), présentant la masse grasse la plus élevée (56.9%), la force la plus faible (25.1 kg) et le VO₂ max le plus bas (31.3 ml/kg/min).
+Cluster 3 — "Polyvalence Physique" : groupe majoritairement masculin (94.2%), affichant le meilleur VO₂ max (39.6 ml/kg/min) et la meilleure flexibilité (11.7 cm)."
+
+# Analyse Combinée — ACP et Clustering
+Cette étape vise à établir le lien entre la réduction de dimension réalisée par l'ACP et la segmentation obtenue par le K-Means, afin de valider la cohérence globale de l'analyse.
+
+```{r acp-clustering}
 fviz_cluster(
-kmeans_result,
-data = data_scaled,
-ellipse.type = "norm",
-geom = "point",
-palette = "jco",
-ggtheme = theme_minimal()
+  res.km,
+  data = data_pca,
+  geom = "point",
+  ellipse.type = "norm",
+  ggtheme = theme_minimal()
 )
 ```
-La projection des clusters sur le plan factoriel montre une séparation relativement claire entre les groupes d’individus.
 
-Les clusters apparaissent distribués dans différentes zones du plan factoriel, ce qui confirme que les dimensions extraites par l’ACP capturent efficacement les principales différences entre les profils physiques.
+La visualisation conjointe des clusters dans le plan factoriel (Dim1 × Dim2) constitue le cœur de l'analyse combinée. Elle permet de lire simultanément la structure factorielle issue de l'ACP et la segmentation produite par le K-Means.
+Lecture de Dim1 (axe horizontal — Condition physique globale) :
 
-Quelques zones de chevauchement restent observables, ce qui est fréquent dans les données multidimensionnelles réelle
+Le Cluster 2 (vert — Profil Féminin) occupe exclusivement la partie droite positive de Dim1, zone associée à une masse grasse élevée et de faibles performances musculo-cardiovasculaires. Son ellipse est bien délimitée et peu chevauchante avec les autres groupes sur cet axe.
+Les Clusters 1 (rouge — Force Musculaire) et 3 (bleu — Polyvalence Physique) se situent dans la partie gauche et centrale de Dim1, zone associée à une bonne force musculaire et un VO₂ max élevé. Leurs ellipses se chevauchent significativement, traduisant une proximité physiologique entre ces deux profils masculins.
 
-##6.2 Relation entre ACP et segmentation
-L’ACP et le clustering K-Means sont deux méthodes complémentaires.
+Lecture de Dim2 (axe vertical — Flexibilité) :
 
-L’Analyse en Composantes Principales permet de réduire la dimensionnalité des données tout en conservant l’essentiel de l’information statistique.
+Le Cluster 3 (bleu) tend à occuper les valeurs supérieures de Dim2, cohérent avec sa meilleure flexibilité (11.7 cm).
+Le Cluster 1 (rouge) est davantage concentré autour de Dim2 ≈ 0, reflétant sa flexibilité faible (2.98 cm).
+Le Cluster 2 (vert) présente une dispersion verticale large, confirmant l'hétérogénéité de la flexibilité au sein du profil féminin
 
-Cette réduction facilite ensuite la segmentation des individus par K-Means en éliminant une partie du bruit et des redondances entre variables.
+# Complémentarité des deux méthodes 
 
-Les axes factoriels obtenus par l’ACP représentent les principales sources de variabilité des données, utilisées indirectement par l’algorithme de clustering pour construire les groupes homogènes.
-##6.3 Interprétation des groupes dans l’espace factoriel
-L’analyse conjointe de l’ACP et du clustering met en évidence plusieurs profils physiques distincts.
+L'ACP et le K-Means sont deux approches statistiques complémentaires qui se renforcent mutuellement dans cette étude :
 
-Les individus appartenant au cluster caractérisé par de bonnes performances cardiovasculaires et une faible masse graisseuse se positionnent principalement dans les zones associées aux variables de performance physique.
+L'ACP a permis de synthétiser l'information des 5 variables en 2 dimensions principales expliquant 58.83% de la variance totale, révélant deux axes physiologiques distincts : la condition physique globale (Dim1) et la flexibilité corporelle (Dim2).
+Le K-Means a exploité ces coordonnées factorielles pour regrouper objectivement les 2000 individus en 3 clusters homogènes, sans connaissance préalable du sexe ou d'autres caractéristiques.
 
-À l’inverse, les individus présentant une forte composition graisseuse et une faible endurance se situent dans les zones opposées du plan factoriel.
+Validation croisée :
+La correspondance entre les axes factoriels et les clusters est remarquable :
+Axe ACPSignificationCluster associéDim1 positifMasse grasse élevée, faible performanceCluster 2 (Profil Féminin)Dim1 négatifBonne force et VO₂ maxClusters 1 et 3Dim2 positifFlexibilité élevéeCluster 3 (Polyvalence)Dim2 négatif/nulFlexibilité faibleCluster 1 (Force Musculaire)
+Cette correspondance confirme que les axes factoriels de l'ACP ont correctement capturé les dimensions de variation qui structurent naturellement la population étudiée.
+Limite observée :
+Le chevauchement des ellipses des clusters 1 et 3 dans le plan factoriel indique que ces deux profils masculins ne sont pas parfaitement séparables en deux dimensions. Une partie de leur différenciation repose sur des dimensions factorielles au-delà de Dim1 et Dim2, notamment Dim3 (endurance abdominale, 18.1% de variance). Cela confirme la richesse et la complexité des profils physiologiques masculins dans cet échantillon."*
 
-Cette organisation confirme la cohérence entre les axes principaux de l’ACP et les profils identifiés par K-Means.
-## 6.4 Importance des variables dans la segmentation
-Les résultats montrent que certaines variables jouent un rôle particulièrement important dans la segmentation des individus.
+#Interprétation et Conclusions Décisionnelles
 
-Les variables liées aux performances physiques, notamment :
+1 Signification des profils
 
-vo2_estimate_ml_per_kg_min
-hand_grip_strength_kg
-sit_ups_count
+L'analyse combinée ACP + K-Means a permis d'identifier trois profils physiologiques distincts dont la signification dépasse le simple cadre statistique :
+Cluster 1 — "Les Guerriers Musculaires" (n = 698, 98.6% Hommes)
 
-contribuent fortement à la différenciation des clusters.
+"Le premier cluster regroupe quasi-exclusivement des hommes (98.6%), caractérisés par la force de préhension la plus élevée de l'échantillon (41.8 kg en moyenne) et une capacité cardiovasculaire correcte (VO₂ = 37.3 ml/kg/min). Leur masse grasse est modérée (43.8%) et stable, reflétant le profil physiologique masculin standard.
+Ce groupe se distingue cependant par la flexibilité la plus faible des trois clusters (2.98 cm), ce qui constitue leur principal point de fragilité physique. Ces individus présentent un profil de force brute sans souplesse — typique d'hommes physiquement actifs mais ne pratiquant pas d'activités axées sur l'étirement ou la mobilité (musculation, travaux physiques).
+Point faible identifié : flexibilité insuffisante, risque potentiel de blessures musculo-squelettiques.*
+Recommandation : intégrer des séances d'étirement et de mobilité articulaire."*
 
-À l’inverse, les variables de composition corporelle comme :
 
-bmi
-percent_body_fat
+Cluster 2 — "Les Profils Féminins Sédentaires" (n = 607, 98% Femmes)
 
-permettent d’identifier les profils présentant une condition physique plus faible.
+"Le deuxième cluster est composé à 98% de femmes, avec les caractéristiques physiologiques les plus contrastées de l'échantillon. Ce groupe présente la masse grasse la plus élevée (56.9%), la force de préhension la plus faible (25.1 kg) et le VO₂ max le plus bas (31.3 ml/kg/min), indiquant une capacité cardiovasculaire limitée.
+Paradoxalement, ce cluster enregistre le nombre moyen d'abdominaux le plus élevé (19.3) et une flexibilité intermédiaire (9.20 cm), ce qui suggère que ces femmes ne sont pas totalement inactives mais présentent un profil de condition physique déséquilibré : bonne endurance abdominale locale mais faible condition générale.
+Il est essentiel de souligner que la masse grasse élevée et la force plus faible observées dans ce cluster reflètent en partie les différences biologiques naturelles entre sexes et ne doivent pas être interprétées comme une condition physique défavorable au sens absolu, mais plutôt comme un profil physiologique féminin avec une activité physique globale insuffisante.
+Point faible identifié : capacité cardiovasculaire faible et force musculaire limitée.*
+Recommandation : programme combinant cardio-training et renforcement musculaire des membres supérieurs."*
 
-Ces résultats confirment les observations réalisées lors de l’Analyse en Composantes Principales.
-##6.5 Conclusion de l’analyse combinée
-L’analyse combinée de l’ACP et du clustering K-Means a permis d’obtenir une vision globale et structurée des données.
 
-L’ACP a facilité la compréhension des relations entre les variables et réduit la complexité du dataset, tandis que le clustering a permis d’identifier plusieurs profils homogènes d’individus.
+Cluster 3 — "Les Athlètes Polyvalents" (n = 695, 94.2% Hommes)
 
-Les résultats obtenus mettent en évidence une cohérence importante entre les axes factoriels et les groupes identifiés.
+"Le troisième cluster regroupe majoritairement des hommes (94.2%) présentant le profil physiologique le plus complet et le plus équilibré de l'échantillon. Ce groupe se distingue par :
 
-Cette approche combinée permet ainsi de mieux comprendre la structure multidimensionnelle des données et de révéler différents niveaux de condition physique au sein de la population étudiée.
+Le VO₂ max le plus élevé (39.6 ml/kg/min) — meilleure capacité cardiovasculaire
+La flexibilité la plus haute (11.7 cm) — mobilité articulaire supérieure
+Une bonne force de préhension (39.6 kg) — légèrement inférieure au cluster 1
+Une masse grasse similaire au cluster 1 (43.9%) mais avec de meilleures performances
+
+La combinaison d'une bonne endurance, d'une force correcte et d'une flexibilité supérieure suggère que ces individus pratiquent des activités physiques variées et régulières impliquant à la fois l'endurance (course, natation, vélo) et la mobilité (sports collectifs, arts martiaux, yoga).
+Point fort : profil le plus complet et le plus équilibré des trois groupes.*
+Recommandation : maintenir le niveau d'activité actuel et optimiser la récupération."*
+##Variables explicatives clés
+Deux variables se révèlent particulièrement discriminantes dans la structuration des profils :
+
+percent_body_fat (contribution Dim1 = 35%) : principal facteur de différenciation entre le profil féminin (cluster 2) et les profils masculins (clusters 1 et 3). Cette variable reflète à la fois les différences biologiques entre sexes et le niveau d'activité physique global.
+hand_grip_strength_kg (contribution Dim1 = 31%) : variable la plus discriminante pour séparer les profils de force. Elle constitue un indicateur synthétique fiable de la condition musculaire globale, largement utilisé en médecine préventive comme marqueur de santé.
+sit_and_reach_cm (contribution Dim2 = 68%) : seule variable permettant de distinguer les clusters 1 et 3, deux profils masculins par ailleurs similaires. Elle révèle une dimension souvent négligée de la condition physique : la mobilité articulaire."*
+
+##Conclusions décisionnelles
+
+"Les résultats de cette analyse multivariée permettent de formuler des recommandations concrètes adaptées à chaque profil, avec des retombées directes dans les domaines sportif, médical et de santé publique :
+ProfilPriorité d'interventionProgramme recommandéCluster 1 — Force MusculaireAméliorer la flexibilitéYoga, étirements, mobilité articulaire 2x/semaineCluster 2 — Profil FémininRenforcer le cardio et la forceCardio-training + musculation progressiveCluster 3 — PolyvalenceMaintenir et optimiserProgramme d'entretien varié
+Au niveau organisationnel :
+Dans le cadre du programme NFA coréen, ces résultats suggèrent que les politiques de promotion de l'activité physique devraient être différenciées par profil plutôt qu'uniformes. Une approche ciblée permettrait d'optimiser l'allocation des ressources de santé publique en concentrant les efforts sur le cluster 2, qui présente les indicateurs cardiovasculaires les plus préoccupants.*
+Limite principale de l'étude :
+La segmentation obtenue est fortement influencée par le sexe, variable non incluse dans l'ACP. Une analyse séparée par sexe permettrait d'identifier des sous-profils plus fins au sein de chaque groupe et d'affiner les recommandations. De plus, l'absence d'information sur le niveau d'activité physique déclaré, l'alimentation et les antécédents médicaux limite la portée causale des interprétations."*
+
+ Conclusion générale
+
+"Cette étude a démontré la puissance des méthodes statistiques multivariées pour explorer et structurer des données physiologiques complexes. L'ACP a permis de synthétiser l'information en deux dimensions physiologiquement interprétables, tandis que le K-Means a objectivement segmenté la population en trois profils cohérents et distincts.
+La découverte que le sexe constitue le principal facteur structurant des profils physiologiques — sans avoir été explicitement inclus dans l'analyse — témoigne de la robustesse et de la sensibilité des méthodes multivariées pour détecter des structures sous-jacentes dans les données.*
+Ces résultats ouvrent la voie à des applications concrètes en santé publique, médecine du sport et programme de prévention, en offrant une base scientifique solide pour une prise en charge individualisée et adaptée à chaque profil physiologique." 

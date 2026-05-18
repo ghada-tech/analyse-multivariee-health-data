@@ -1,8 +1,0 @@
-"0","library(FactoMineR)"
-"0","library(factoextra)"
-"0",""
-"0","variables_quantitatives <- num_vars"
-"0",""
-"0","data_numeric <- health_clean %>% select(all_of(variables_quantitatives))"
-"0",""
-"0","data_scaled <- scale(data_numeric)"
